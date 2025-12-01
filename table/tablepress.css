@@ -1,0 +1,30 @@
+/* 테이블 자체를 ID와 클래스로 동시에 선택 */
+table#tablepress-1.tablepress {
+    border-collapse: collapse !important; 
+    width: 100% !important; 
+}
+
+/* 헤더 행 */
+table#tablepress-1.tablepress thead th {
+    background-color: #152B8F !important; /* 배경색 강제 적용 */
+    color: #ffffff !important; 
+    font-weight: bold !important; 
+    text-align: center !important; 
+    height: 45px !important; 
+    border: none !important; 
+}
+
+/* 본문 셀 스타일 */
+table#tablepress-1.tablepress tbody td {
+    background-color: #ffffff !important; 
+    color: #666666 !important; 
+    border: 1px solid #CCCCCC !important; /* 라인색 강제 적용 */
+    padding: 10px 15px !important; 
+    vertical-align: top !important; 
+    text-align: left !important; 
+}
+
+/* 행(row) 호버 효과 */
+table#tablepress-1.tablepress tbody tr:hover td {
+    background-color: #f5f5f5 !important; 
+}
