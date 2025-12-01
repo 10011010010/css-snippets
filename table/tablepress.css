@@ -1,13 +1,13 @@
 /* 테이블 자체를 ID와 클래스로 동시에 선택 */
 table#tablepress-1.tablepress,
-table#tablepress-2.tablepress {
+table#tablepress-1-no-2.tablepress {
     border-collapse: collapse !important; 
     width: 100% !important; 
 }
 
 /* 헤더 행 */
 table#tablepress-1.tablepress thead th,
-table#tablepress-2.tablepress thead th {
+table#tablepress-1-no-2.tablepress thead th {
     background-color: #152B8F !important;
     color: #ffffff !important; 
     font-size: calc(var(--text-m) * 0.9) !important;
@@ -19,7 +19,7 @@ table#tablepress-2.tablepress thead th {
 
 /* 본문 셀 스타일 */
 table#tablepress-1.tablepress tbody td,
-table#tablepress-2.tablepress tbody td {
+table#tablepress-1-no-2.tablepress tbody td {
     background-color: #ffffff !important; 
     color: #666666 !important; 
     font-size: calc(var(--text-m) * 0.9) !important;
@@ -34,6 +34,6 @@ table#tablepress-2.tablepress tbody td {
 
 /* 컬럼(열) 호버 효과 */
 table#tablepress-1.tablepress tbody td:hover,
-table#tablepress-2.tablepress tbody td:hover {
+table#tablepress-1-no-2.tablepress tbody td:hover {
     background-color: #f9f9f9 !important;
 }
