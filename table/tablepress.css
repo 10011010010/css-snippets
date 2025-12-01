@@ -6,9 +6,10 @@ table#tablepress-1.tablepress {
 
 /* 헤더 행 */
 table#tablepress-1.tablepress thead th {
-    background-color: #152B8F !important; /* 배경색 강제 적용 */
+    background-color: #152B8F !important;
     color: #ffffff !important; 
-    font-weight: bold !important; 
+    font-size: calc(var(--text-m) * 0.94) !important;
+    font-weight: 800 !important;
     text-align: center !important; 
     height: 45px !important; 
     border: none !important; 
@@ -18,7 +19,9 @@ table#tablepress-1.tablepress thead th {
 table#tablepress-1.tablepress tbody td {
     background-color: #ffffff !important; 
     color: #666666 !important; 
-    border: 1px solid #CCCCCC !important; /* 라인색 강제 적용 */
+    font-size: calc(var(--text-m) * 0.94) !important;
+    font-weight: 600 !important;
+    border: 1px solid #CCCCCC !important;
     padding: 10px 15px !important; 
     vertical-align: top !important; 
     text-align: left !important; 
