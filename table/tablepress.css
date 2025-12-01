@@ -21,6 +21,7 @@ table#tablepress-1.tablepress tbody td {
     color: #666666 !important; 
     font-size: calc(var(--text-m) * 0.94) !important;
     font-weight: 600 !important;
+    line-height: 1.4 !important;
     border: 1px solid #CCCCCC !important;
     padding: 10px 15px !important; 
     vertical-align: top !important; 
