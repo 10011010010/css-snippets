@@ -26,6 +26,7 @@ table#tablepress-1.tablepress tbody td {
     padding: 10px 15px !important; 
     vertical-align: top !important; 
     text-align: left !important; 
+    transition: background-color 0.3s ease !important;
 }
 
 /* 행(row) 호버 효과 */
