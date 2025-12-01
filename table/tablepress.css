@@ -31,3 +31,9 @@ table#tablepress-1.tablepress tbody td {
 table#tablepress-1.tablepress tbody tr:hover td {
     background-color: #f9f9f9 !important; 
 }
+
+
+/* 컬럼(열) 호버 효과 */
+table#tablepress-1.tablepress tbody td:hover {
+    background-color: #f9f9f9 !important;
+}
