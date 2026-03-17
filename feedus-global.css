@@ -10,10 +10,10 @@
 
   /* ------- Colors ------- */
   /* Primary */
-  --color-primary:        #0A7B3F;
-  --color-primary-dark:   #065E2F;
-  --color-primary-light:  #0E9A50;
-  --color-primary-bg:     #E8F5EE;
+  --color-primary:        #007D51;
+  --color-primary-dark:   #005C3B;
+  --color-primary-light:  #00A368;
+  --color-primary-bg:     #E6F4EE;
 
   /* Neutral */
   --color-black:          #111111;
@@ -36,11 +36,11 @@
   --color-text-secondary: #6B6B6B;
   --color-text-muted:     #8C8C8C;
   --color-border:         #E5E5E5;
-  --color-link:           #0A7B3F;
+  --color-link:           #007D51;
   --color-link-hover:     #065E2F;
 
   /* Footer */
-  --color-footer-bg:      #0A7B3F;
+  --color-footer-bg:      #007D51;
   --color-footer-text:    #FFFFFF;
 
 
