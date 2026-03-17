@@ -1,0 +1,30 @@
+<!--
+  Adobe Fonts (Typekit) - OmniGothic 임베드
+  Bricks > Settings > Custom Code > Header Scripts 에 붙여넣기
+  또는 코드 스니펫(Code element)에 추가
+-->
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'rbi5eep',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+<!--
+  FOIT 방지 스타일 (선택사항 - CSS에 추가)
+  폰트 로딩 중 깜빡임 방지
+-->
+<style>
+  .wf-loading * {
+    opacity: 0;
+  }
+  .wf-active *,
+  .wf-inactive * {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+</style>
