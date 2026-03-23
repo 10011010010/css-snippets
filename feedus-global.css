@@ -541,21 +541,9 @@ a:hover {
 
 /* 이미지 영역 */
 .grid-hero__image {
-  position: relative;
   overflow: hidden;
   min-width: 0;
   aspect-ratio: 4 / 3;
-}
-
-/* 이미지 하단 녹색 라인 */
-.grid-hero__image::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #007D51;
 }
 
 /* 이미지 태그 */
