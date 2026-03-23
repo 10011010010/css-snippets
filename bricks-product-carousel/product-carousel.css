@@ -28,9 +28,24 @@
   margin-right: 0 !important;
 }
 
-/* --- 기존 WooCommerce 버튼 스타일 보존 --- */
-.product-carousel .splide__slide .button {
-  all: revert;
+/* --- WooCommerce 버튼 스타일 (Splide 오버라이드 방지) --- */
+.product-carousel .splide__slide a.button {
+  font-family: var(--feedus-font-body);
+  background-color: var(--feedus-primary);
+  color: var(--feedus-white);
+  border: 1px solid var(--feedus-primary);
+  border-radius: var(--feedus-border-radius-pill);
+  padding: 10px 30px;
+  font-size: 1rem;
+  transition: all var(--feedus-duration-medium) ease;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.product-carousel .splide__slide a.button:hover {
+  opacity: 0.85;
 }
 
 /* --- 화살표: 오른쪽 아래 배치 --- */
