@@ -1,13 +1,13 @@
-# Bricks Builder - Responsive Product Carousel
+# Bricks Builder - Splide Product Carousel
 
-브릭스빌더 Products 요소를 반응형 캐러셀로 변환하는 CSS + JS 스니펫.
+Splide.js 기반 반응형 상품 캐러셀. Products 요소에 클래스만 추가하면 동작.
 
-## 기능
+## 왜 Splide?
 
-- 반응형 썸네일 갯수 자동 조절 (항상 1줄 유지)
-- 좌/우 화살표로 스크롤
-- 터치 스와이프 지원 (모바일)
-- 끝 도달 시 화살표 자동 숨김
+- **~12KB gzip** (Swiper 40KB의 1/3)
+- 의존성 제로 (jQuery 불필요)
+- 반응형 breakpoints, 화살표, 드래그 내장
+- WAI-ARIA 접근성 기본 지원
 
 ## 반응형 브레이크포인트
 
@@ -20,31 +20,33 @@
 
 ## 적용 방법
 
-### 1단계: Products 요소에 클래스 추가
+### 1단계: Splide CDN 로드
 
-Bricks 편집기에서 Products 요소 선택 → Style → CSS Classes에 `product-carousel` 입력
+Bricks > Settings > Custom Code > **Header Scripts**:
 
-### 2단계: CSS 추가
-
-**방법 A** — Bricks > Settings > Custom Code > CSS:
-`product-carousel.css` 내용 전체 붙여넣기
-
-**방법 B** — 자식테마 `style.css`에 추가
-
-### 3단계: JS 추가
-
-**방법 A** — Bricks > Settings > Custom Code > Body (footer) Scripts:
 ```html
-<script src="/wp-content/themes/your-child-theme/js/product-carousel.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide-core.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
 ```
 
-**방법 B** — `functions.php`에 등록:
+> `splide-core.min.css`는 최소한의 기능 CSS만 포함 (~2KB). 화살표/페이지네이션 디자인은 `product-carousel.css`에서 커스텀.
+
+### 2단계: Products 요소에 클래스 추가
+
+Bricks 편집기 → Products 요소 선택 → CSS Classes에 `product-carousel` 입력
+
+### 3단계: 커스텀 CSS/JS 추가
+
+**CSS** → Bricks > Settings > Custom Code > CSS에 `product-carousel.css` 붙여넣기
+
+**JS** → Body (footer) Scripts 또는 `functions.php`:
+
 ```php
 add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script(
         'product-carousel',
         get_stylesheet_directory_uri() . '/js/product-carousel.js',
-        [],
+        ['splide'],  // Splide 로드 후 실행
         '1.0',
         true
     );
@@ -53,7 +55,8 @@ add_action('wp_enqueue_scripts', function () {
 
 ## 커스터마이징
 
-- **갯수 변경**: CSS 미디어쿼리의 `width: calc(...)` 분모 수정
-- **간격 변경**: `.products`의 `gap` 값과 `calc()` 내 gap 합계 동시 수정
-- **화살표 디자인**: `.carousel-arrow` 스타일 수정
-- **브레이크포인트**: 미디어쿼리 값을 Bricks 설정에 맞게 조정
+- **갯수 변경**: JS의 `perPage` 및 `breakpoints` 값 수정
+- **간격 변경**: JS의 `gap` 값 수정
+- **화살표 디자인**: CSS의 `.splide__arrow` 수정
+- **자동 재생**: JS 옵션에 `autoplay: true, interval: 3000` 추가
+- **무한 루프**: JS 옵션에서 `type: "loop"` 으로 변경

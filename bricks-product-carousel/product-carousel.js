@@ -1,70 +1,78 @@
 /**
- * Bricks Builder - Responsive Product Carousel
- * Products 요소에 .product-carousel 클래스 추가 시 자동 초기화
+ * Bricks Builder - Splide Product Carousel
  *
  * 사용법:
  * 1. Bricks에서 Products 요소에 CSS 클래스 "product-carousel" 추가
- * 2. 이 JS와 CSS를 로드 (Bricks > Settings > Custom Code 또는 자식테마)
+ * 2. Splide CDN + 이 JS/CSS 로드
+ *
+ * Splide가 요구하는 DOM 구조를 JS가 자동으로 만들어줌
+ * (기존 .products > .product 구조를 splide__list > splide__slide로 래핑)
  */
 (function () {
   "use strict";
 
-  function initCarousel(wrapper) {
-    if (wrapper.dataset.carouselInit) return;
-    wrapper.dataset.carouselInit = "true";
+  function initCarousel(el) {
+    if (el.dataset.splideInit) return;
+    el.dataset.splideInit = "true";
 
-    const list = wrapper.querySelector(".products");
-    if (!list) return;
+    var productList = el.querySelector(".products");
+    if (!productList) return;
 
-    // 화살표 생성
-    const prevBtn = document.createElement("button");
-    prevBtn.className = "carousel-arrow carousel-arrow--prev";
-    prevBtn.setAttribute("aria-label", "이전 상품");
-    prevBtn.textContent = "이전";
+    var products = productList.querySelectorAll(":scope > .product");
+    if (!products.length) return;
 
-    const nextBtn = document.createElement("button");
-    nextBtn.className = "carousel-arrow carousel-arrow--next";
-    nextBtn.setAttribute("aria-label", "다음 상품");
-    nextBtn.textContent = "다음";
+    // Splide DOM 구조 생성
+    // <div class="splide">
+    //   <div class="splide__track">
+    //     <ul class="splide__list">
+    //       <li class="splide__slide">...product...</li>
+    //     </ul>
+    //   </div>
+    // </div>
 
-    wrapper.appendChild(prevBtn);
-    wrapper.appendChild(nextBtn);
+    var splideRoot = document.createElement("div");
+    splideRoot.className = "splide";
 
-    // 한 카드의 너비 + gap 만큼 스크롤
-    function getScrollAmount() {
-      const card = list.querySelector(".product");
-      if (!card) return 300;
-      const style = getComputedStyle(list);
-      const gap = parseFloat(style.gap) || 20;
-      return card.offsetWidth + gap;
-    }
+    var track = document.createElement("div");
+    track.className = "splide__track";
 
-    // 화살표 활성/비활성 상태 업데이트
-    function updateArrows() {
-      const tolerance = 2;
-      prevBtn.disabled = list.scrollLeft <= tolerance;
-      nextBtn.disabled =
-        list.scrollLeft + list.offsetWidth >= list.scrollWidth - tolerance;
-    }
+    var list = document.createElement("ul");
+    list.className = "splide__list";
 
-    prevBtn.addEventListener("click", function () {
-      list.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+    products.forEach(function (product) {
+      var slide = document.createElement("li");
+      slide.className = "splide__slide";
+      slide.appendChild(product);
+      list.appendChild(slide);
     });
 
-    nextBtn.addEventListener("click", function () {
-      list.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
-    });
+    track.appendChild(list);
+    splideRoot.appendChild(track);
 
-    list.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
+    // 기존 .products를 Splide 구조로 교체
+    productList.replaceWith(splideRoot);
 
-    // 초기 상태
-    updateArrows();
+    // Splide 초기화
+    new Splide(splideRoot, {
+      type: "slide",
+      perPage: 5,
+      gap: "20px",
+      pagination: false,
+      arrows: true,
+      drag: true,
+      snap: true,
+      breakpoints: {
+        1199: { perPage: 4 },
+        991:  { perPage: 3 },
+        767:  { perPage: 2, gap: "15px" },
+      },
+    }).mount();
   }
 
-  // DOM 로드 후 초기화
   function init() {
-    document.querySelectorAll(".brxe-products.product-carousel").forEach(initCarousel);
+    document
+      .querySelectorAll(".brxe-products.product-carousel")
+      .forEach(initCarousel);
   }
 
   if (document.readyState === "loading") {
@@ -73,7 +81,7 @@
     init();
   }
 
-  // Bricks AJAX/Infinite Scroll 등으로 동적 추가 대응
+  // AJAX 등 동적 로딩 대응
   new MutationObserver(function (mutations) {
     for (var i = 0; i < mutations.length; i++) {
       if (mutations[i].addedNodes.length) {
