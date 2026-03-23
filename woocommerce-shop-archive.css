@@ -1,0 +1,398 @@
+/* ============================================
+   WooCommerce Shop Archive - Redbrick Style
+   피더스 샵 페이지 커스터마이즈
+
+   Bricks Builder 기본 엘리먼트 + 글로벌 root 변수 활용
+   ============================================ */
+
+/* ==========================================================================
+   1. 샵 페이지 타이틀
+   ========================================================================== */
+.bricks-archive-title-wrapper .title {
+  font-family: var(--feedus-font-heading);
+  font-weight: var(--fw-bold);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 126%;
+  letter-spacing: -0.05em;
+  color: var(--feedus-primary);
+  margin-bottom: var(--feedus-row-padding-bottom) !important;
+}
+
+/* ==========================================================================
+   2. Before Shop Loop (결과 수 + 정렬)
+   ========================================================================== */
+
+/* 결과 수 숨김 */
+.woocommerce-result-count {
+  display: none !important;
+}
+
+/* 정렬 영역 우측 정렬 */
+.bricks-before-shop-loop {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--feedus-card-gap);
+  margin-bottom: var(--feedus-row-padding-bottom);
+}
+
+.woocommerce-ordering {
+  margin: 0 !important;
+}
+
+.woocommerce-ordering .orderby {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--feedus-white);
+  border: 1px solid var(--feedus-primary);
+  border-radius: var(--feedus-border-radius-pill);
+  padding: 8px 36px 8px 16px;
+  font-family: var(--feedus-font-body);
+  font-size: 18px;
+  font-weight: var(--fw-regular);
+  color: var(--feedus-primary);
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23007D51' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px;
+  transition: border-color var(--feedus-duration-default) ease;
+  margin: 0 !important;
+}
+
+.woocommerce-ordering .orderby:focus {
+  outline: none;
+  border-color: var(--feedus-primary);
+  box-shadow: 0 0 0 2px rgba(var(--feedus-primary-rgb), 0.2);
+}
+
+/* ==========================================================================
+   3. 상품 그리드 - 3열 (Redbrick 스타일)
+   ========================================================================== */
+ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--feedus-row-padding-bottom) var(--feedus-card-gap);
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+ul.products::before,
+ul.products::after {
+  display: none !important;
+}
+
+/* ==========================================================================
+   4. 상품 카드
+   ========================================================================== */
+ul.products li.product {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none;
+  background: transparent;
+  position: relative;
+}
+
+/* ==========================================================================
+   5. 상품 링크 (카드 전체 클릭 영역)
+   ========================================================================== */
+ul.products li.product a.woocommerce-LoopProduct-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==========================================================================
+   6. 상품 이미지 - feedus-image-product 스타일 재활용
+   글로벌 CSS의 .feedus-image-product 패턴 활용
+   (정사각 비율, contain, gray-light 배경, border-radius)
+   ========================================================================== */
+ul.products li.product a.woocommerce-LoopProduct-link img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  object-position: center;
+  background-color: var(--feedus-gray-light);
+  border-radius: var(--feedus-border-radius);
+  padding: 10%;
+  transition: opacity var(--feedus-duration-medium) var(--feedus-ease-out-slow);
+}
+
+ul.products li.product a.woocommerce-LoopProduct-link:hover img {
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   7. 상품명 - 글로벌 타이포그래피 활용
+   ========================================================================== */
+ul.products li.product .woocommerce-loop-product__title {
+  font-family: var(--feedus-font-body);
+  font-weight: var(--fw-medium);
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.03em;
+  color: var(--feedus-primary);
+  margin-top: 12px !important;
+  margin-bottom: 4px !important;
+  padding: 0;
+}
+
+/* ==========================================================================
+   8. 가격 - 글로벌 타이포그래피 활용
+   ========================================================================== */
+ul.products li.product .price {
+  font-family: var(--feedus-font-body);
+  font-weight: var(--fw-regular);
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.03em;
+  color: var(--feedus-primary);
+  display: block;
+  margin: 0 !important;
+}
+
+ul.products li.product .price .woocommerce-Price-amount {
+  color: var(--feedus-primary);
+}
+
+/* 할인 가격 - 원가 */
+ul.products li.product .price del {
+  color: rgba(var(--feedus-primary-rgb), 0.4);
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+/* 할인 가격 - 세일가 */
+ul.products li.product .price ins {
+  text-decoration: none;
+  color: var(--feedus-primary);
+  font-weight: var(--fw-medium);
+}
+
+/* ==========================================================================
+   9. Add to cart / Select options 버튼 숨김
+   Redbrick 스타일: 그리드에서 버튼 숨기고 카드 클릭으로 상품 상세 이동
+   ========================================================================== */
+ul.products li.product > a.button,
+ul.products li.product > a.add_to_cart_button,
+ul.products li.product > a.product_type_variable,
+ul.products li.product > a.product_type_simple {
+  display: none !important;
+}
+
+/* screen-reader-text (접근성) */
+ul.products li.product > .screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   10. 세일 뱃지 - feedus 브랜드 스타일
+   ========================================================================== */
+ul.products li.product .onsale,
+ul.products li.product span.onsale {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--feedus-primary);
+  color: var(--feedus-white);
+  font-family: var(--feedus-font-body);
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  padding: 4px 12px;
+  border-radius: var(--feedus-border-radius-pill);
+  z-index: 2;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  margin: 0 !important;
+}
+
+/* ==========================================================================
+   11. 품절 뱃지
+   ========================================================================== */
+ul.products li.product.outofstock a.woocommerce-LoopProduct-link {
+  position: relative;
+}
+
+ul.products li.product.outofstock a.woocommerce-LoopProduct-link::after {
+  content: "품절";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--feedus-black);
+  color: var(--feedus-white);
+  font-family: var(--feedus-font-body);
+  font-size: 14px;
+  font-weight: var(--fw-semibold);
+  padding: 4px 12px;
+  border-radius: var(--feedus-border-radius-pill);
+  z-index: 2;
+  letter-spacing: -0.03em;
+}
+
+/* 품절 상품 이미지 반투명 */
+ul.products li.product.outofstock a.woocommerce-LoopProduct-link img {
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   12. 카테고리 필터 탭 (선택사항)
+   WooCommerce 기본 제공 아님 - 별도 구현 필요
+   글로벌 CSS의 feedus-btn 스타일 기반
+   ========================================================================== */
+.shop-category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--feedus-row-padding-bottom);
+}
+
+.shop-category-filter a,
+.shop-category-filter button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  border: 1px solid var(--feedus-primary);
+  border-radius: var(--feedus-border-radius-pill);
+  background: transparent;
+  color: var(--feedus-primary);
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--feedus-duration-default) ease;
+}
+
+.shop-category-filter a:hover,
+.shop-category-filter button:hover {
+  background: rgba(var(--feedus-primary-rgb), 0.1);
+}
+
+.shop-category-filter a.active,
+.shop-category-filter button.active {
+  background: var(--feedus-primary);
+  color: var(--feedus-white);
+  border-color: var(--feedus-primary);
+}
+
+/* ==========================================================================
+   13. 페이지네이션 - 글로벌 스타일 활용
+   ========================================================================== */
+.woocommerce-pagination {
+  text-align: center;
+  margin-top: var(--feedus-row-padding-top);
+  padding-top: var(--feedus-row-padding-top);
+}
+
+.woocommerce-pagination ul {
+  display: inline-flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 !important;
+}
+
+.woocommerce-pagination ul li {
+  margin: 0 !important;
+}
+
+.woocommerce-pagination ul li a,
+.woocommerce-pagination ul li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  color: var(--feedus-primary);
+  text-decoration: none;
+  transition: background var(--feedus-duration-default) ease;
+  margin: 0 !important;
+}
+
+.woocommerce-pagination ul li a:hover {
+  background: var(--feedus-gray-light);
+}
+
+.woocommerce-pagination ul li span.current {
+  font-weight: var(--fw-bold);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--feedus-primary);
+}
+
+/* ==========================================================================
+   14. 반응형 - 글로벌 브레이크포인트 활용
+   ========================================================================== */
+
+/* 태블릿 (768px 이하) → 2열 */
+@media screen and (max-width: 768px) {
+  ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--feedus-row-padding-bottom) var(--feedus-card-gap);
+  }
+
+  .bricks-archive-title-wrapper .title {
+    font-size: 2rem;
+  }
+
+  ul.products li.product .woocommerce-loop-product__title {
+    font-size: 16px;
+    margin-top: 8px !important;
+  }
+
+  ul.products li.product .price {
+    font-size: 14px;
+  }
+
+  ul.products li.product a.woocommerce-LoopProduct-link img {
+    border-radius: calc(var(--feedus-border-radius) * 0.6);
+    padding: 8%;
+  }
+}
+
+/* 모바일 (480px 이하) → 2열 유지, 사이즈 축소 */
+@media screen and (max-width: 480px) {
+  ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px var(--feedus-card-gap);
+  }
+
+  .bricks-archive-title-wrapper .title {
+    font-size: 1.6rem;
+    margin-bottom: 14px !important;
+  }
+
+  ul.products li.product .woocommerce-loop-product__title {
+    font-size: 14px;
+  }
+
+  ul.products li.product .price {
+    font-size: 13px;
+  }
+
+  .woocommerce-ordering .orderby {
+    font-size: 14px;
+    padding: 6px 30px 6px 12px;
+  }
+
+  .shop-category-filter a,
+  .shop-category-filter button {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+}
