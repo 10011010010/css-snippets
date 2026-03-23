@@ -144,8 +144,8 @@ ul.products li.product a.woocommerce-LoopProduct-link:hover img {
    ========================================================================== */
 ul.products li.product .woocommerce-loop-product__title {
   font-family: var(--feedus-font-body);
-  font-weight: 400;
-  font-size: 20px;
+  font-weight: 500;
+  font-size: 24px;
   line-height: 150%;
   letter-spacing: -0.03em;
   color: var(--feedus-primary);
