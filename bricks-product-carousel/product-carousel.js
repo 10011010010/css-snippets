@@ -71,7 +71,7 @@
 
   function init() {
     document
-      .querySelectorAll(".brxe-products.product-carousel")
+      .querySelectorAll(".product-carousel")
       .forEach(initCarousel);
   }
 

@@ -4,20 +4,20 @@
    =========================================== */
 
 /* --- Splide 기본 구조 오버라이드 --- */
-.brxe-products.product-carousel .splide__track {
+.product-carousel .splide__track {
   overflow: hidden;
 }
 
-.brxe-products.product-carousel .splide__list {
+.product-carousel .splide__list {
   display: flex;
 }
 
-.brxe-products.product-carousel .splide__slide {
+.product-carousel .splide__slide {
   flex-shrink: 0;
 }
 
 /* --- 화살표 커스텀 --- */
-.brxe-products.product-carousel .splide__arrows {
+.product-carousel .splide__arrows {
   position: absolute;
   top: 0;
   left: 0;
@@ -26,7 +26,7 @@
   pointer-events: none;
 }
 
-.brxe-products.product-carousel .splide__arrow {
+.product-carousel .splide__arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -46,27 +46,27 @@
   padding: 0;
 }
 
-.brxe-products.product-carousel .splide__arrow:hover {
+.product-carousel .splide__arrow:hover {
   background: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-.brxe-products.product-carousel .splide__arrow--prev {
+.product-carousel .splide__arrow--prev {
   left: 8px;
 }
 
-.brxe-products.product-carousel .splide__arrow--next {
+.product-carousel .splide__arrow--next {
   right: 8px;
 }
 
-.brxe-products.product-carousel .splide__arrow svg {
+.product-carousel .splide__arrow svg {
   width: 16px;
   height: 16px;
   fill: #333;
 }
 
 /* 끝 도달 시 화살표 숨기기 */
-.brxe-products.product-carousel .splide__arrow[disabled] {
+.product-carousel .splide__arrow[disabled] {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
@@ -74,21 +74,21 @@
 
 /* --- 모바일 화살표 크기 축소 --- */
 @media (max-width: 767px) {
-  .brxe-products.product-carousel .splide__arrow {
+  .product-carousel .splide__arrow {
     width: 32px;
     height: 32px;
   }
 
-  .brxe-products.product-carousel .splide__arrow svg {
+  .product-carousel .splide__arrow svg {
     width: 12px;
     height: 12px;
   }
 
-  .brxe-products.product-carousel .splide__arrow--prev {
+  .product-carousel .splide__arrow--prev {
     left: 4px;
   }
 
-  .brxe-products.product-carousel .splide__arrow--next {
+  .product-carousel .splide__arrow--next {
     right: 4px;
   }
 }
