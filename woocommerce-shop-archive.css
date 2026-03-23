@@ -69,11 +69,11 @@
 }
 
 /* ==========================================================================
-   3. 상품 그리드 - 3열 (Redbrick 스타일)
+   3. 상품 그리드 - 4열 (Redbrick 스타일)
    ========================================================================== */
 ul.products {
   display: grid !important;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--feedus-row-padding-bottom) var(--feedus-card-gap);
   list-style: none !important;
   padding: 0 !important;
