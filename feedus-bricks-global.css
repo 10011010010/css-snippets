@@ -138,10 +138,11 @@ h1, h2, h3, h4, h5, h6,
 /* --- h1 : 히어로 대제목 (Redbrick "For Coffee Drinkers" 스타일) --- */
 h1, .brxe-heading[data-tag="h1"] {
   font-weight: 300;
-  font-size: 60px;
-  line-height: 99%;
+  font-size: 80px;
+  line-height: 110%;
   letter-spacing: -5px;
-  margin-bottom: 50px;
+  margin: 0;
+  overflow: hidden;
   font-family: var(--feedus-font-heading);
   font-variant-ligatures: common-ligatures;
   font-feature-settings: "liga", "clig";
@@ -150,6 +151,7 @@ h1, .brxe-heading[data-tag="h1"] {
 @media only screen and (min-width: 600px) {
   h1, .brxe-heading[data-tag="h1"] {
     font-size: 72.5px;
+    line-height: 99%;
   }
 }
 
