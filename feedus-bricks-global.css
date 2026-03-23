@@ -180,7 +180,9 @@ h2, .brxe-heading[data-tag="h2"] {
 /* --- h3 : 카테고리 라벨 (Redbrick "Blends", "Singles" 스타일) --- */
 h3, .brxe-heading[data-tag="h3"] {
   font-size: 20px;
-  font-weight: var(--feedus-font-heading-weight);
+  line-height: 155%;
+  letter-spacing: -0.03em;
+  font-weight: 500;
   margin: 0;
 }
 
@@ -196,14 +198,15 @@ h6, .brxe-heading[data-tag="h6"] {
   font-size: 1rem;
 }
 
-/* --- p : 본문 텍스트 (Redbrick 스타일) --- */
+/* --- p : 본문 텍스트 (디자인 시안: 18pt / 27pt / tracking -30) --- */
 p, .brxe-text-basic,
 li, span, label, select, option, textarea {
   font-family: var(--feedus-font-body);
-  font-size: 20px;
+  font-size: 18px;
   color: var(--feedus-primary);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 150%;
+  letter-spacing: -0.03em;
 }
 
 a {
