@@ -7,32 +7,9 @@
  *
  * Splide가 요구하는 DOM 구조를 JS가 자동으로 만들어줌
  * (기존 .products > .product 구조를 splide__list > splide__slide로 래핑)
- *
- * Slick처럼 고정 픽셀 너비 계산 방식 사용 (퍼센트 계산 오차 방지)
  */
 (function () {
   "use strict";
-
-  var GAP = 20;
-  var BREAKPOINTS = [
-    { max: 767,  perPage: 2, gap: 15 },
-    { max: 991,  perPage: 3, gap: GAP },
-    { max: 1199, perPage: 4, gap: GAP },
-    { max: Infinity, perPage: 5, gap: GAP },
-  ];
-
-  function getPerPage() {
-    var w = window.innerWidth;
-    for (var i = 0; i < BREAKPOINTS.length; i++) {
-      if (w <= BREAKPOINTS[i].max) return BREAKPOINTS[i];
-    }
-    return BREAKPOINTS[BREAKPOINTS.length - 1];
-  }
-
-  function calcFixedWidth(containerWidth) {
-    var bp = getPerPage();
-    return Math.floor((containerWidth - bp.gap * (bp.perPage - 1)) / bp.perPage);
-  }
 
   function initCarousel(el) {
     if (el.dataset.splideInit) return;
@@ -66,34 +43,22 @@
     splideRoot.appendChild(track);
     productList.replaceWith(splideRoot);
 
-    // 컨테이너 실제 너비 기반 고정 픽셀 계산 (Slick 방식)
-    var containerWidth = el.clientWidth;
-    var bp = getPerPage();
-
-    var splide = new Splide(splideRoot, {
+    // perPage 모드: CSS calc()로 정확한 퍼센트 계산
+    new Splide(splideRoot, {
       type: "slide",
-      fixedWidth: calcFixedWidth(containerWidth) + "px",
-      gap: bp.gap + "px",
+      perPage: 5,
+      gap: "20px",
       pagination: false,
       arrows: true,
       drag: true,
       snap: true,
+      trimSpace: true,
+      breakpoints: {
+        1199: { perPage: 4 },
+        991:  { perPage: 3 },
+        767:  { perPage: 2, gap: "15px" },
+      },
     }).mount();
-
-    // 리사이즈 시 재계산
-    var resizeTimer;
-    window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        var newWidth = el.clientWidth;
-        var newBp = getPerPage();
-        splide.options = {
-          fixedWidth: calcFixedWidth(newWidth) + "px",
-          gap: newBp.gap + "px",
-        };
-        splide.refresh();
-      }, 150);
-    });
   }
 
   function init() {
@@ -108,7 +73,6 @@
     init();
   }
 
-  // AJAX 등 동적 로딩 대응
   new MutationObserver(function (mutations) {
     for (var i = 0; i < mutations.length; i++) {
       if (mutations[i].addedNodes.length) {
