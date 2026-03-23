@@ -1,225 +1,288 @@
 /**
  * WooCommerce Single Product - Multi-option Cart Accumulator
- * 피더스 상품 상세페이지: 옵션 선택 시 누적 추가, 개별 삭제 가능
+ * 피더스 상품 상세페이지
  *
- * 기본 WooCommerce variation 동작을 오버라이드하여
- * 사이즈를 선택할 때마다 리스트에 추가되게 합니다.
+ * 핵심 동작:
+ * 1. 드롭다운에서 사이즈를 선택하면 아래 리스트에 추가됨
+ * 2. 같은 옵션을 다시 선택하면 수량 +1
+ * 3. 리스트에서 각 아이템의 수량 조절 (+/-) 및 개별 삭제 (X) 가능
+ * 4. "장바구니 담기" 버튼으로 선택된 모든 아이템을 WooCommerce 장바구니에 추가
+ *
+ * 별도 플러그인 불필요 - WooCommerce wc-ajax 엔드포인트 활용
  */
 (function () {
   "use strict";
 
-  // 페이지가 single product가 아니면 종료
-  if (!document.querySelector(".single-product .variations_form")) return;
+  // DOM 준비 대기
+  function init() {
+    var form = document.querySelector(".single-product .variations_form");
+    if (!form) return;
 
-  const form = document.querySelector(".variations_form");
-  const variationData = JSON.parse(form.dataset.product_variations || "[]");
-  const summary = document.querySelector(".summary.entry-summary");
-
-  // 선택된 아이템 저장소: { variationId: { name, price, qty, variationId } }
-  let selectedItems = {};
-
-  // UI 컨테이너 생성
-  const listContainer = document.createElement("div");
-  listContainer.className = "feedus-selected-items";
-  listContainer.style.display = "none";
-
-  const totalContainer = document.createElement("div");
-  totalContainer.className = "feedus-selected-total";
-  totalContainer.style.display = "none";
-
-  // Add to cart 버튼 아래에 삽입
-  const variationWrap = form.querySelector(".single_variation_wrap");
-  if (variationWrap) {
-    variationWrap.after(listContainer, totalContainer);
-  }
-
-  // variation 선택 이벤트 감지
-  const selects = form.querySelectorAll(".variations select");
-
-  selects.forEach(function (select) {
-    select.addEventListener("change", function () {
-      const val = this.value;
-      if (!val) return;
-
-      // 매칭되는 variation 찾기
-      const attrName = this.dataset.attribute_name;
-      const matched = variationData.find(function (v) {
-        return v.attributes[attrName] === val;
-      });
-
-      if (!matched) return;
-
-      // 이미 선택된 항목이면 수량 +1
-      if (selectedItems[matched.variation_id]) {
-        selectedItems[matched.variation_id].qty += 1;
-      } else {
-        selectedItems[matched.variation_id] = {
-          name: val,
-          price: matched.display_price,
-          qty: 1,
-          variationId: matched.variation_id,
-        };
-      }
-
-      renderList();
-
-      // 드롭다운을 초기값으로 리셋 (다음 선택을 위해)
-      setTimeout(function () {
-        select.value = "";
-        // WooCommerce variation 이벤트 트리거
-        select.dispatchEvent(new Event("change", { bubbles: true }));
-      }, 100);
-    });
-  });
-
-  function renderList() {
-    const keys = Object.keys(selectedItems);
-
-    if (keys.length === 0) {
-      listContainer.style.display = "none";
-      totalContainer.style.display = "none";
+    var variationData;
+    try {
+      variationData = JSON.parse(form.getAttribute("data-product_variations") || "[]");
+    } catch (e) {
       return;
     }
+    if (!variationData.length) return;
 
-    listContainer.style.display = "flex";
-    totalContainer.style.display = "flex";
+    var productId = form.querySelector('input[name="product_id"]');
+    if (!productId) return;
+    productId = productId.value;
 
-    listContainer.innerHTML = "";
+    var selects = form.querySelectorAll(".variations select");
+    if (!selects.length) return;
 
-    keys.forEach(function (id) {
-      var item = selectedItems[id];
-      var el = document.createElement("div");
-      el.className = "feedus-selected-item";
+    // 상태 저장소
+    var selectedItems = {};
+    var isAdding = false;
+    var skipNextChange = false;
 
-      el.innerHTML =
-        '<div class="feedus-selected-item__info">' +
-        '<span class="feedus-selected-item__name">' +
-        escapeHtml(item.name) +
-        "</span>" +
-        '<span class="feedus-selected-item__price">' +
-        formatPrice(item.price) +
-        "</span>" +
-        "</div>" +
-        '<div class="feedus-selected-item__qty">' +
-        '<button type="button" data-action="minus" data-id="' +
-        id +
-        '">-</button>' +
-        "<span>" +
-        item.qty +
-        "</span>" +
-        '<button type="button" data-action="plus" data-id="' +
-        id +
-        '">+</button>' +
-        "</div>" +
-        '<button type="button" class="feedus-selected-item__remove" data-id="' +
-        id +
-        '">&times;</button>';
+    // --- UI 구성 ---
+    var cartSection = document.createElement("div");
+    cartSection.className = "feedus-cart-section";
 
-      listContainer.appendChild(el);
-    });
+    var listEl = document.createElement("div");
+    listEl.className = "feedus-selected-items";
+    listEl.style.display = "none";
 
-    // 이벤트 바인딩 (수량 +/-)
-    listContainer.querySelectorAll("[data-action]").forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        var id = this.dataset.id;
-        var action = this.dataset.action;
+    var totalEl = document.createElement("div");
+    totalEl.className = "feedus-selected-total";
+    totalEl.style.display = "none";
 
-        if (action === "plus") {
-          selectedItems[id].qty += 1;
-        } else if (action === "minus") {
-          selectedItems[id].qty -= 1;
-          if (selectedItems[id].qty <= 0) {
-            delete selectedItems[id];
+    var addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.className = "feedus-add-to-cart-btn";
+    addBtn.textContent = "\uc7a5\ubc14\uad6c\ub2c8 \ub2f4\uae30";
+    addBtn.disabled = true;
+
+    var emptyMsg = document.createElement("div");
+    emptyMsg.className = "feedus-empty-msg";
+    emptyMsg.textContent = "\uc0ac\uc774\uc988\ub97c \uc120\ud0dd\ud574\uc8fc\uc138\uc694";
+
+    cartSection.appendChild(emptyMsg);
+    cartSection.appendChild(listEl);
+    cartSection.appendChild(totalEl);
+    cartSection.appendChild(addBtn);
+
+    // form 뒤에 삽입 (summary 안에)
+    form.parentNode.insertBefore(cartSection, form.nextSibling);
+
+    // --- 드롭다운 이벤트 ---
+    selects.forEach(function (select) {
+      select.addEventListener("change", function () {
+        if (skipNextChange) {
+          skipNextChange = false;
+          return;
+        }
+
+        var val = this.value;
+        if (!val) return;
+
+        // attribute name
+        var attrName = this.getAttribute("data-attribute_name") || this.name;
+
+        // 매칭 variation 찾기
+        var matched = null;
+        for (var i = 0; i < variationData.length; i++) {
+          var v = variationData[i];
+          if (v.attributes[attrName] === val) {
+            matched = v;
+            break;
           }
+        }
+        if (!matched) return;
+
+        var vid = String(matched.variation_id);
+
+        // 이미 있으면 수량 +1, 아니면 새로 추가
+        if (selectedItems[vid]) {
+          selectedItems[vid].qty += 1;
+        } else {
+          selectedItems[vid] = {
+            name: val,
+            price: matched.display_price,
+            qty: 1,
+            variationId: matched.variation_id,
+            attrName: attrName
+          };
         }
 
         renderList();
+
+        // 드롭다운 리셋 (다음 선택 가능하도록)
+        var self = this;
+        skipNextChange = true;
+        setTimeout(function () {
+          self.value = "";
+          // jQuery 기반 WooCommerce 이벤트 트리거
+          if (window.jQuery) {
+            window.jQuery(self).trigger("change");
+          }
+          skipNextChange = false;
+        }, 50);
       });
     });
 
-    // 이벤트 바인딩 (삭제)
-    listContainer
-      .querySelectorAll(".feedus-selected-item__remove")
-      .forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          delete selectedItems[this.dataset.id];
-          renderList();
-        });
+    // --- 렌더링 ---
+    function renderList() {
+      var keys = Object.keys(selectedItems);
+
+      if (keys.length === 0) {
+        listEl.style.display = "none";
+        totalEl.style.display = "none";
+        emptyMsg.style.display = "block";
+        addBtn.disabled = true;
+        return;
+      }
+
+      emptyMsg.style.display = "none";
+      listEl.style.display = "flex";
+      totalEl.style.display = "flex";
+      addBtn.disabled = false;
+
+      // 리스트 렌더
+      listEl.innerHTML = "";
+      var grandTotal = 0;
+      var grandQty = 0;
+
+      keys.forEach(function (vid) {
+        var item = selectedItems[vid];
+        var subtotal = item.price * item.qty;
+        grandTotal += subtotal;
+        grandQty += item.qty;
+
+        var row = document.createElement("div");
+        row.className = "feedus-selected-item";
+
+        row.innerHTML =
+          '<div class="feedus-selected-item__info">' +
+            '<span class="feedus-selected-item__name">' + escapeHtml(item.name) + '</span>' +
+            '<span class="feedus-selected-item__price">' + formatPrice(item.price) + '</span>' +
+          '</div>' +
+          '<div class="feedus-selected-item__qty">' +
+            '<button type="button" data-action="minus" data-vid="' + vid + '">-</button>' +
+            '<span>' + item.qty + '</span>' +
+            '<button type="button" data-action="plus" data-vid="' + vid + '">+</button>' +
+          '</div>' +
+          '<span class="feedus-selected-item__subtotal">' + formatPrice(subtotal) + '</span>' +
+          '<button type="button" class="feedus-selected-item__remove" data-vid="' + vid + '">\u00d7</button>';
+
+        listEl.appendChild(row);
       });
 
-    // 총합 계산
-    var total = 0;
-    var totalQty = 0;
-    keys.forEach(function (id) {
-      if (selectedItems[id]) {
-        total += selectedItems[id].price * selectedItems[id].qty;
-        totalQty += selectedItems[id].qty;
+      // 이벤트 위임으로 처리
+      listEl.onclick = function (e) {
+        var target = e.target;
+        if (target.tagName !== "BUTTON") return;
+
+        e.preventDefault();
+        var vid = target.getAttribute("data-vid");
+        if (!vid || !selectedItems[vid]) return;
+
+        if (target.classList.contains("feedus-selected-item__remove")) {
+          delete selectedItems[vid];
+        } else {
+          var action = target.getAttribute("data-action");
+          if (action === "plus") {
+            selectedItems[vid].qty += 1;
+          } else if (action === "minus") {
+            selectedItems[vid].qty -= 1;
+            if (selectedItems[vid].qty <= 0) {
+              delete selectedItems[vid];
+            }
+          }
+        }
+        renderList();
+      };
+
+      // 총합
+      totalEl.innerHTML =
+        '<span>\ucd1d ' + grandQty + '\uac1c \uc0c1\ud488</span>' +
+        '<span>' + formatPrice(grandTotal) + '</span>';
+    }
+
+    // --- 장바구니 담기 ---
+    addBtn.addEventListener("click", function () {
+      var keys = Object.keys(selectedItems);
+      if (keys.length === 0 || isAdding) return;
+
+      isAdding = true;
+      addBtn.disabled = true;
+      addBtn.textContent = "\ucd94\uac00 \uc911...";
+
+      // WooCommerce AJAX URL
+      var ajaxUrl = (typeof wc_add_to_cart_variation_params !== "undefined" &&
+                     wc_add_to_cart_variation_params.wc_ajax_url)
+        ? wc_add_to_cart_variation_params.wc_ajax_url.replace("%%endpoint%%", "add_to_cart")
+        : "/?wc-ajax=add_to_cart";
+
+      // 순차적으로 아이템 추가 (동시 요청 시 세션 충돌 방지)
+      var queue = keys.slice();
+
+      function processNext() {
+        if (queue.length === 0) {
+          // 완료 - 페이지 새로고침
+          window.location.reload();
+          return;
+        }
+
+        var vid = queue.shift();
+        var item = selectedItems[vid];
+
+        var formData = new FormData();
+        formData.append("product_id", productId);
+        formData.append("variation_id", String(item.variationId));
+        formData.append("quantity", String(item.qty));
+        formData.append(item.attrName, item.name);
+
+        fetch(form.action || window.location.href, {
+          method: "POST",
+          body: new URLSearchParams({
+            "add-to-cart": productId,
+            "product_id": productId,
+            "variation_id": String(item.variationId),
+            "quantity": String(item.qty)
+          }).toString() + "&" + encodeURIComponent(item.attrName) + "=" + encodeURIComponent(item.name),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          credentials: "same-origin"
+        })
+        .then(function () {
+          processNext();
+        })
+        .catch(function () {
+          processNext();
+        });
+      }
+
+      processNext();
+    });
+
+    // 기본 form submit 차단 (커스텀 버튼으로 대체)
+    form.addEventListener("submit", function (e) {
+      if (Object.keys(selectedItems).length > 0) {
+        e.preventDefault();
       }
     });
-
-    totalContainer.innerHTML =
-      "<span>" +
-      totalQty +
-      "\uac1c \uc0c1\ud488</span><span>" +
-      formatPrice(total) +
-      "</span>";
   }
 
-  // Add to cart 오버라이드: 선택된 아이템들을 모두 장바구니에 추가
-  form.addEventListener("submit", function (e) {
-    var keys = Object.keys(selectedItems);
-    if (keys.length === 0) return; // 기본 동작 유지
-
-    e.preventDefault();
-
-    var productId = form.querySelector('input[name="product_id"]').value;
-    var promises = [];
-
-    keys.forEach(function (id) {
-      var item = selectedItems[id];
-      var formData = new FormData();
-      formData.append("add-to-cart", productId);
-      formData.append("product_id", productId);
-      formData.append("variation_id", item.variationId);
-      formData.append("quantity", item.qty);
-
-      // attribute 추가
-      selects.forEach(function (select) {
-        var attrName = select.name;
-        formData.append(attrName, item.name);
-      });
-
-      promises.push(
-        fetch(form.action, {
-          method: "POST",
-          body: formData,
-          credentials: "same-origin",
-        })
-      );
-    });
-
-    Promise.all(promises)
-      .then(function () {
-        // 장바구니 추가 완료 후 페이지 새로고침 (WooCommerce 기본 동작 유지)
-        window.location.reload();
-      })
-      .catch(function (err) {
-        console.error("Cart add error:", err);
-        window.location.reload();
-      });
-  });
-
+  // --- 유틸 ---
   function formatPrice(price) {
-    return (
-      "\u20a9" + Number(price).toLocaleString("ko-KR")
-    );
+    return "\u20a9" + Number(price).toLocaleString("ko-KR");
   }
 
   function escapeHtml(str) {
-    var div = document.createElement("div");
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+    var el = document.createElement("span");
+    el.textContent = str;
+    return el.innerHTML;
+  }
+
+  // DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();

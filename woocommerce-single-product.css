@@ -6,54 +6,99 @@
    ============================================ */
 
 /* ==========================================================================
-   1. 브레드크럼 숨김
+   1. 숨김 요소: 브레드크럼, SKU/Category, "사이즈" 라벨
    ========================================================================== */
-.woocommerce-breadcrumb {
+.single-product .woocommerce-breadcrumb {
+  display: none !important;
+}
+
+.single-product .product_meta {
+  display: none !important;
+}
+
+.single-product .variations th.label {
+  display: none !important;
+}
+
+/* WooCommerce 기본 수량/버튼 영역 숨김 (JS 커스텀 UI로 대체) */
+.single-product .single_variation_wrap {
+  display: none !important;
+}
+
+/* Clear 링크 숨김 (자동 리셋되므로 불필요) */
+.single-product .reset_variations {
   display: none !important;
 }
 
 /* ==========================================================================
-   2. SKU / Category 숨김
+   2. 풀페이지 레이아웃 - Bricks 컨테이너 오버라이드
    ========================================================================== */
-.product_meta {
-  display: none !important;
+
+/* Bricks의 #primary, #main 컨테이너 제한 해제 */
+.single-product #primary,
+.single-product #main {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Bricks 컨테이너가 감싸는 경우 대응 */
+.single-product .brxe-container,
+.single-product .brxe-section,
+.single-product .brx-section-wrap {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* ==========================================================================
-   3. "사이즈" 라벨(th) 숨김
-   ========================================================================== */
-.variations th.label {
-  display: none !important;
-}
-
-/* ==========================================================================
-   4. 상품 상세 레이아웃 - 2컬럼 (이미지 | 정보)
+   3. 상품 상세 레이아웃 - Redbrick 스타일 50/50
    ========================================================================== */
 .single-product div.product {
-  display: grid;
+  display: grid !important;
   grid-template-columns: 1fr 1fr;
-  gap: var(--feedus-container-padding);
-  align-items: start;
-  max-width: 100%;
-  padding: var(--feedus-row-padding-top) 0;
+  grid-template-rows: auto auto auto;
+  gap: 0;
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 /* ==========================================================================
-   5. 좌측 이미지 영역 - 배경 #F2F2F2, radius 25px
+   4. 좌측 이미지 영역 - 뷰포트 50% 풀 활용
    ========================================================================== */
 .single-product .woocommerce-product-gallery {
-  background-color: var(--feedus-gray-light);
-  border-radius: var(--feedus-border-radius);
-  padding: 40px;
-  overflow: hidden;
-  position: relative;
+  background-color: var(--feedus-gray-light) !important;
+  border-radius: 0 var(--feedus-border-radius) var(--feedus-border-radius) 0;
+  padding: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
+.single-product .woocommerce-product-gallery .woocommerce-product-gallery__wrapper {
+  width: 100%;
+  max-width: 500px;
 }
 
 .single-product .woocommerce-product-gallery img {
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: auto !important;
   object-fit: contain;
-  mix-blend-mode: multiply;
+  max-height: 65vh;
+}
+
+/* 줌 이미지 숨김 */
+.single-product .woocommerce-product-gallery img.zoomImg {
+  display: none !important;
 }
 
 /* 갤러리 줌 트리거 숨김 */
@@ -62,44 +107,56 @@
 }
 
 /* ==========================================================================
-   6. 우측 상품 정보 영역
+   5. 우측 상품 정보 영역
    ========================================================================== */
 .single-product .summary.entry-summary {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 10px;
+  padding: var(--feedus-row-padding-top) var(--feedus-container-padding);
+  align-self: start;
 }
 
 /* 상품명 */
 .single-product .product_title.entry-title {
   font-family: var(--feedus-font-heading);
   font-weight: var(--feedus-font-heading-weight);
-  font-size: 32px;
-  line-height: 130%;
+  font-size: 36px;
+  line-height: 120%;
   letter-spacing: -0.03em;
   color: var(--feedus-primary);
-  margin-bottom: 0 !important;
+  margin: 0 0 4px 0 !important;
 }
 
 /* 가격 */
-.single-product .summary .price {
+.single-product .summary > .price {
   font-family: var(--feedus-font-body);
   font-size: 20px;
   font-weight: var(--fw-medium);
   color: var(--feedus-primary);
-  margin-bottom: 0 !important;
+  margin: 0 0 8px 0 !important;
 }
 
 /* ==========================================================================
-   7. 옵션 선택 (variations) 스타일
+   6. 옵션 선택 (variations) 스타일
    ========================================================================== */
+.single-product .variations_form {
+  width: 100%;
+}
+
 .single-product .variations {
   width: 100%;
-  border: none;
+  border: none !important;
+  border-collapse: collapse;
+}
+
+.single-product .variations tr {
+  display: block;
+  margin-bottom: 0;
 }
 
 .single-product .variations td.value {
+  display: block;
   padding: 0;
 }
 
@@ -110,7 +167,7 @@
   background: var(--feedus-white);
   border: 1px solid var(--feedus-primary);
   border-radius: var(--feedus-border-radius-pill);
-  padding: 10px 40px 10px 20px;
+  padding: 12px 44px 12px 20px;
   font-family: var(--feedus-font-body);
   font-size: 16px;
   font-weight: var(--fw-regular);
@@ -129,101 +186,21 @@
   box-shadow: 0 0 0 2px rgba(var(--feedus-primary-rgb), 0.2);
 }
 
-/* Clear 링크 */
-.single-product .reset_variations {
-  font-family: var(--feedus-font-body);
-  font-size: 14px;
-  color: var(--feedus-gray);
-  margin-top: 8px;
-  display: inline-block;
-}
-
 /* ==========================================================================
-   8. 수량 선택 + 장바구니 버튼
+   7. 선택된 옵션 리스트 (JS로 생성) + 장바구니 버튼
    ========================================================================== */
-.single-product .quantity {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--feedus-primary);
-  border-radius: var(--feedus-border-radius-pill);
-  overflow: hidden;
-  height: 48px;
-}
-
-.single-product .quantity input.qty {
-  width: 50px;
-  text-align: center;
-  border: none;
-  font-family: var(--feedus-font-body);
-  font-size: 16px;
-  font-weight: var(--fw-medium);
-  color: var(--feedus-primary);
-  background: transparent;
-  -moz-appearance: textfield;
-  margin: 0 !important;
-}
-
-.single-product .quantity input.qty::-webkit-inner-spin-button,
-.single-product .quantity input.qty::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.single-product .quantity .action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 100%;
-  cursor: pointer;
-  color: var(--feedus-primary);
-  transition: background var(--feedus-duration-default) ease;
-}
-
-.single-product .quantity .action:hover {
-  background: rgba(var(--feedus-primary-rgb), 0.08);
-}
-
-/* Add to cart 버튼 */
-.single-product .single_add_to_cart_button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--feedus-primary);
-  color: var(--feedus-white);
-  border: none;
-  border-radius: var(--feedus-border-radius-pill);
-  padding: 0 32px;
-  height: 48px;
-  font-family: var(--feedus-font-body);
-  font-size: 16px;
-  font-weight: var(--fw-medium);
-  letter-spacing: -0.03em;
-  cursor: pointer;
-  transition: opacity var(--feedus-duration-default) ease;
-  flex: 1;
-}
-
-.single-product .single_add_to_cart_button:hover {
-  opacity: 0.85;
-}
-
-/* 수량 + 버튼 가로 배치 */
-.single-product .woocommerce-variation-add-to-cart {
+.feedus-cart-section {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 20px;
 }
 
-/* ==========================================================================
-   9. 선택된 옵션 리스트 (JS로 생성)
-   ========================================================================== */
 .feedus-selected-items {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 12px;
-  padding-top: 12px;
+  padding: 16px 0;
   border-top: 1px solid rgba(var(--feedus-primary-rgb), 0.15);
 }
 
@@ -231,13 +208,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 12px 16px;
   background: var(--feedus-gray-light);
-  border-radius: var(--feedus-border-radius);
+  border-radius: calc(var(--feedus-border-radius) * 0.6);
   font-family: var(--feedus-font-body);
   font-size: 14px;
   color: var(--feedus-primary);
   letter-spacing: -0.03em;
+  gap: 8px;
 }
 
 .feedus-selected-item__info {
@@ -245,43 +223,49 @@
   align-items: center;
   gap: 12px;
   flex: 1;
+  min-width: 0;
 }
 
 .feedus-selected-item__name {
   font-weight: var(--fw-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .feedus-selected-item__price {
   font-weight: var(--fw-regular);
   color: var(--feedus-gray);
+  white-space: nowrap;
 }
 
 .feedus-selected-item__qty {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-left: auto;
-  margin-right: 12px;
+  flex-shrink: 0;
 }
 
 .feedus-selected-item__qty button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border: 1px solid rgba(var(--feedus-primary-rgb), 0.3);
   border-radius: 50%;
-  background: transparent;
+  background: var(--feedus-white);
   color: var(--feedus-primary);
   font-size: 14px;
   cursor: pointer;
   transition: all var(--feedus-duration-default) ease;
   padding: 0;
+  line-height: 1;
 }
 
 .feedus-selected-item__qty button:hover {
   background: rgba(var(--feedus-primary-rgb), 0.1);
+  border-color: var(--feedus-primary);
 }
 
 .feedus-selected-item__qty span {
@@ -289,7 +273,13 @@
   text-align: center;
   font-size: 14px;
   font-weight: var(--fw-medium);
-  margin: 0 !important;
+}
+
+.feedus-selected-item__subtotal {
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: right;
 }
 
 .feedus-selected-item__remove {
@@ -297,10 +287,11 @@
   border: none;
   cursor: pointer;
   color: var(--feedus-gray);
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
-  padding: 0 0 0 8px;
+  padding: 0 0 0 4px;
   transition: color var(--feedus-duration-default) ease;
+  flex-shrink: 0;
 }
 
 .feedus-selected-item__remove:hover {
@@ -312,7 +303,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0 0;
+  padding: 16px 0;
   font-family: var(--feedus-font-body);
   font-size: 18px;
   font-weight: var(--fw-semibold);
@@ -321,22 +312,73 @@
   border-top: 1px solid var(--feedus-primary);
 }
 
+/* 커스텀 Add to cart 버튼 */
+.feedus-add-to-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--feedus-primary);
+  color: var(--feedus-white) !important;
+  border: none;
+  border-radius: var(--feedus-border-radius-pill);
+  padding: 14px 32px;
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  transition: opacity var(--feedus-duration-default) ease;
+  margin-top: 12px;
+}
+
+.feedus-add-to-cart-btn:hover {
+  opacity: 0.85;
+}
+
+.feedus-add-to-cart-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 빈 상태 안내 */
+.feedus-empty-msg {
+  text-align: center;
+  padding: 20px;
+  font-family: var(--feedus-font-body);
+  font-size: 14px;
+  color: var(--feedus-gray);
+  letter-spacing: -0.03em;
+}
+
 /* ==========================================================================
-   10. WooCommerce 탭 영역
+   8. WooCommerce 탭 영역
    ========================================================================== */
 .single-product .woocommerce-tabs {
   grid-column: 1 / -1;
   border-top: 1px solid rgba(var(--feedus-primary-rgb), 0.15);
-  padding-top: var(--feedus-row-padding-top);
+  padding: var(--feedus-row-padding-top) var(--feedus-container-padding);
 }
 
 .single-product .woocommerce-tabs .wc-tabs {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   list-style: none;
   padding: 0;
   margin: 0 0 var(--feedus-row-padding-bottom) 0 !important;
-  border-bottom: none;
+  border-bottom: none !important;
+}
+
+.single-product .woocommerce-tabs .wc-tabs::before,
+.single-product .woocommerce-tabs .wc-tabs::after {
+  display: none !important;
+}
+
+.single-product .woocommerce-tabs .wc-tabs li {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
 }
 
 .single-product .woocommerce-tabs .wc-tabs li a {
@@ -357,12 +399,12 @@
 }
 
 /* ==========================================================================
-   11. 관련 상품 영역
+   9. 관련 상품 영역
    ========================================================================== */
 .single-product section.related.products {
   grid-column: 1 / -1;
   border-top: 1px solid rgba(var(--feedus-primary-rgb), 0.15);
-  padding-top: var(--feedus-row-padding-top);
+  padding: var(--feedus-row-padding-top) var(--feedus-container-padding);
 }
 
 .single-product section.related.products h2 {
@@ -374,86 +416,78 @@
 }
 
 /* ==========================================================================
-   12. 반응형 - 글로벌 브레이크포인트 활용
+   10. 반응형 - 글로벌 브레이크포인트 활용
    ========================================================================== */
 
-/* 태블릿 (768px 이하) → 1컬럼 */
+/* 태블릿 (768px 이하) → 1컬럼, 이미지 위 / 정보 아래 */
 @media screen and (max-width: 768px) {
   .single-product div.product {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: var(--feedus-row-padding-top) 0;
+    grid-template-columns: 1fr !important;
   }
 
   .single-product .woocommerce-product-gallery {
-    border-radius: calc(var(--feedus-border-radius) * 0.6);
-    padding: 24px;
+    min-height: 50vh;
+    border-radius: 0;
+    padding: 40px 24px;
+    position: relative;
+    top: auto;
+  }
+
+  .single-product .summary.entry-summary {
+    padding: 24px var(--feedus-container-padding);
   }
 
   .single-product .product_title.entry-title {
-    font-size: 24px;
+    font-size: 28px;
   }
 
-  .single-product .summary .price {
+  .single-product .summary > .price {
     font-size: 18px;
-  }
-
-  .single-product .woocommerce-variation-add-to-cart {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .single-product .quantity {
-    justify-content: center;
-  }
-
-  .single-product .single_add_to_cart_button {
-    width: 100%;
-    justify-content: center;
   }
 
   .feedus-selected-item {
     flex-wrap: wrap;
-    gap: 8px;
   }
 
-  .feedus-selected-item__qty {
-    margin-left: 0;
+  .feedus-selected-item__info {
+    flex-basis: 100%;
   }
 }
 
 /* 모바일 (480px 이하) */
 @media screen and (max-width: 480px) {
   .single-product .woocommerce-product-gallery {
-    padding: 16px;
-    border-radius: calc(var(--feedus-border-radius) * 0.4);
+    min-height: 40vh;
+    padding: 24px 16px;
   }
 
   .single-product .product_title.entry-title {
-    font-size: 20px;
+    font-size: 22px;
   }
 
-  .single-product .summary .price {
+  .single-product .summary > .price {
     font-size: 16px;
   }
 
   .single-product .variations select {
     font-size: 14px;
-    padding: 8px 36px 8px 14px;
+    padding: 10px 36px 10px 16px;
   }
 
-  .single-product .quantity {
-    height: 42px;
-  }
-
-  .single-product .single_add_to_cart_button {
-    height: 42px;
+  .feedus-add-to-cart-btn {
+    padding: 12px 24px;
     font-size: 14px;
   }
 
   .feedus-selected-item {
-    padding: 8px 12px;
+    padding: 10px 12px;
     font-size: 13px;
-    border-radius: calc(var(--feedus-border-radius) * 0.5);
+    border-radius: calc(var(--feedus-border-radius) * 0.4);
+  }
+
+  .single-product .woocommerce-tabs,
+  .single-product section.related.products {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
