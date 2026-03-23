@@ -3,6 +3,13 @@
    Products 요소를 Splide 캐러셀로 변환
    =========================================== */
 
+/* --- 캐러셀 컨테이너 --- */
+.product-carousel {
+  overflow: hidden;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
 /* --- Splide 기본 구조 오버라이드 --- */
 .product-carousel .splide__track {
   overflow: hidden;
@@ -21,28 +28,32 @@
   all: revert;
 }
 
-/* --- 화살표 커스텀 --- */
+/* --- 화살표: 오른쪽 아래 배치 --- */
+.product-carousel .splide {
+  position: relative;
+  padding-bottom: 50px;
+}
+
 .product-carousel .splide__arrows {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   bottom: 0;
+  right: 10px;
+  display: flex;
+  gap: 8px;
   pointer-events: none;
 }
 
 .product-carousel .splide__arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  position: static;
+  transform: none;
   z-index: 10;
   pointer-events: auto;
-  width: 40px;
-  height: 40px;
-  border: none;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -52,48 +63,18 @@
 }
 
 .product-carousel .splide__arrow:hover {
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-.product-carousel .splide__arrow--prev {
-  left: 8px;
-}
-
-.product-carousel .splide__arrow--next {
-  right: 8px;
+  background: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .product-carousel .splide__arrow svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   fill: #333;
 }
 
-/* 끝 도달 시 화살표 숨기기 */
+/* 끝 도달 시 화살표 비활성화 */
 .product-carousel .splide__arrow[disabled] {
-  opacity: 0;
+  opacity: 0.3;
   pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-/* --- 모바일 화살표 크기 축소 --- */
-@media (max-width: 767px) {
-  .product-carousel .splide__arrow {
-    width: 32px;
-    height: 32px;
-  }
-
-  .product-carousel .splide__arrow svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  .product-carousel .splide__arrow--prev {
-    left: 4px;
-  }
-
-  .product-carousel .splide__arrow--next {
-    right: 4px;
-  }
 }

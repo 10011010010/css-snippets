@@ -60,7 +60,6 @@
       type: "slide",
       perPage: 5,
       gap: "20px",
-      padding: "10px",
       pagination: false,
       arrows: true,
       drag: true,
