@@ -8,12 +8,13 @@
 /* ==========================================================================
    1. 샵 페이지 타이틀
    ========================================================================== */
-.bricks-archive-title-wrapper {
+/* 타이틀을 감싸는 컨테이너에 풀폭 라인 */
+.brxe-container:has(.bricks-archive-title-wrapper) {
   position: relative;
   padding-bottom: var(--feedus-row-padding-bottom);
 }
 
-.bricks-archive-title-wrapper::after {
+.brxe-container:has(.bricks-archive-title-wrapper)::after {
   content: "";
   position: absolute;
   bottom: 0;
