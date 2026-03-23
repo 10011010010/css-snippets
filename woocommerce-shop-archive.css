@@ -120,7 +120,7 @@ ul.products li.product a.woocommerce-LoopProduct-link img {
   object-position: center;
   background-color: var(--feedus-gray-light);
   border-radius: var(--feedus-border-radius);
-  padding: 10%;
+  padding: 0;
   transition: opacity var(--feedus-duration-medium) var(--feedus-ease-out-slow);
 }
 
