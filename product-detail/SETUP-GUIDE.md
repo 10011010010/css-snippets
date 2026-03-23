@@ -22,30 +22,45 @@
 
 ```
 Section 1: 상품 메인 (2컬럼)
-├── Container (Grid 1fr 1fr, feedus-no-padding)
-│   ├── Div (좌측 - Sticky)
-│   │   └── Product Gallery          ← 브릭스 우커머스 엘리먼트
+│
+├── Container
+│   ├── [UI] Display: Grid, Columns: 1fr 1fr, Gap: 0
 │   │
-│   └── Div (우측 - 스크롤)
-│       ├── Product Meta              ← 카테고리 표시
-│       ├── Product Title             ← 상품명 (H1)
-│       ├── Product Price             ← 가격
-│       ├── Product Short Description ← 짧은 설명
-│       ├── Product Add to Cart       ← 옵션 + 수량 + 버튼 (올인원)
-│       └── Div                       ← 픽업/배송 정보
+│   ├── Div ← 좌측: 이미지
+│   │   ├── [클래스] product-image-sticky
+│   │   └── Product Gallery (우커머스 엘리먼트)
+│   │
+│   └── Div ← 우측: 상품 정보
+│       ├── [클래스] product-info-col
+│       ├── [UI] Display: Flex, Direction: Column, Padding: 40px
+│       │
+│       ├── Product Meta         ← 카테고리
+│       ├── Product Title        ← H1 상품명
+│       ├── Product Price        ← 가격
+│       ├── Product Short Desc   ← 짧은 설명
+│       ├── Product Add to Cart  ← 옵션 + 수량 + 버튼
+│       └── Div                  ← 픽업/배송 정보
 
-Section 2: Origin 정보 (feedus-line)
-└── Container (Grid 5컬럼)
-    └── Producer / Region / Varietal / Processing / Altitude
+Section 2: Origin 정보
+│
+├── Section
+│   ├── [클래스] feedus-line
+│   └── Container
+│       ├── [UI] Display: Grid, Columns: 1fr 1fr 1fr 1fr 1fr, Gap: 16px
+│       └── Div × 5 (Producer / Region / Varietal / Processing / Altitude)
 
 Section 3: Related Products
+│
 └── Container
     ├── Heading + Shop 버튼
-    └── Product Related               ← 브릭스 우커머스 엘리먼트
+    └── Product Related (우커머스 엘리먼트)
 
-Section 4: Newsletter (bg-primary)
-└── Container
-    └── Form (이메일 + 버튼)
+Section 4: Newsletter
+│
+├── Section
+│   ├── [클래스] bg-primary
+│   └── Container
+│       └── Form (이메일 + 버튼)
 ```
 
 ---
