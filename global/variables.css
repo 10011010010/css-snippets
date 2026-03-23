@@ -1,0 +1,138 @@
+/* ============================================
+   FEEDUS - CSS Custom Properties (Root Variables)
+   에디터 + 프론트엔드 모두 로드 (안전)
+   ============================================ */
+:root {
+  /* ------- Colors ------- */
+  /* Primary */
+  --color-primary:        #007D51;
+  --color-primary-dark:   #005C3B;
+  --color-primary-light:  #00A368;
+  --color-primary-bg:     #E6F4EE;
+  /* Neutral */
+  --color-black:          #111111;
+  --color-gray-900:       #1A1A1A;
+  --color-gray-800:       #2D2D2D;
+  --color-gray-700:       #4A4A4A;
+  --color-gray-600:       #6B6B6B;
+  --color-gray-500:       #8C8C8C;
+  --color-gray-400:       #ACACAC;
+  --color-gray-300:       #D1D1D1;
+  --color-gray-200:       #E5E5E5;
+  --color-gray-100:       #F2F2F2;
+  --color-gray-50:        #F8F8F8;
+  --color-white:          #FFFFFF;
+  /* Semantic */
+  --color-bg:             #FFFFFF;
+  --color-bg-alt:         #F8F8F8;
+  --color-text:           #1A1A1A;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted:     #8C8C8C;
+  --color-border:         #E5E5E5;
+  --color-link:           #007D51;
+  --color-link-hover:     #065E2F;
+  /* Footer */
+  --color-footer-bg:      #007D51;
+  --color-footer-text:    #FFFFFF;
+
+  /* ------- Typography (Font Family) ------- */
+  --font-primary:   "omnigothic", -apple-system, "Malgun Gothic", sans-serif;
+  --font-fallback:  -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif;
+
+  /* ------- Font Weights ------- */
+  --fw-light:       200;
+  --fw-regular:     300;
+  --fw-medium:      400;
+  --fw-semibold:    500;
+  --fw-bold:        600;
+
+  /* ------- Font Sizes (Fluid / Clamp) ------- */
+  /* Display - 히어로 대형 타이틀 */
+  --fs-display:     clamp(2.5rem, 5vw + 1rem, 4.5rem);    /* 40~72px */
+  /* Heading */
+  --fs-h1:          clamp(2rem, 3.5vw + 0.5rem, 3.25rem);  /* 32~52px */
+  --fs-h2:          clamp(1.75rem, 2.5vw + 0.5rem, 2.5rem); /* 28~40px */
+  --fs-h3:          clamp(1.375rem, 1.5vw + 0.5rem, 1.75rem); /* 22~28px */
+  --fs-h4:          clamp(1.125rem, 1vw + 0.5rem, 1.375rem);  /* 18~22px */
+  --fs-h5:          clamp(1rem, 0.5vw + 0.5rem, 1.125rem);    /* 16~18px */
+  /* Body */
+  --fs-body-lg:     clamp(1.0625rem, 0.5vw + 0.5rem, 1.125rem); /* 17~18px */
+  --fs-body:        clamp(0.9375rem, 0.3vw + 0.5rem, 1rem);     /* 15~16px */
+  --fs-body-sm:     clamp(0.8125rem, 0.2vw + 0.5rem, 0.875rem); /* 13~14px */
+  /* Caption / Label */
+  --fs-caption:     0.75rem;    /* 12px */
+  --fs-label:       0.8125rem;  /* 13px */
+  --fs-overline:    0.6875rem;  /* 11px */
+
+  /* ------- Line Heights ------- */
+  --lh-tight:       1.2;   /* 타이틀/디스플레이 */
+  --lh-snug:        1.35;  /* 서브타이틀 */
+  --lh-normal:      1.6;   /* 본문 */
+  --lh-relaxed:     1.75;  /* 본문 (여유) */
+  --lh-loose:       2.0;   /* 넓은 간격 */
+
+  /* ------- Letter Spacing ------- */
+  --ls-tight:      -0.02em;
+  --ls-normal:      0;
+  --ls-wide:        0.02em;
+  --ls-wider:       0.05em;
+  --ls-overline:    0.1em;
+
+  /* ------- Spacing (8px Grid System) ------- */
+  --space-2xs:      0.25rem;   /*  4px */
+  --space-xs:       0.5rem;    /*  8px */
+  --space-sm:       0.75rem;   /* 12px */
+  --space-md:       1rem;      /* 16px */
+  --space-lg:       1.5rem;    /* 24px */
+  --space-xl:       2rem;      /* 32px */
+  --space-2xl:      3rem;      /* 48px */
+  --space-3xl:      4rem;      /* 64px */
+  --space-4xl:      6rem;      /* 96px */
+  --space-5xl:      8rem;      /* 128px */
+  /* Section Spacing (반응형) */
+  --section-gap:        clamp(4rem, 8vw, 8rem);       /* 섹션 간 간격 */
+  --section-padding-y:  clamp(3rem, 6vw, 6rem);       /* 섹션 내부 상하 패딩 */
+  --section-padding-x:  clamp(1.25rem, 4vw, 3rem);    /* 섹션 내부 좌우 패딩 */
+
+  /* ------- Layout ------- */
+  --container-max:   1280px;
+  --container-wide:  1440px;
+  --container-narrow: 960px;
+  --gutter:          clamp(1rem, 2vw, 2rem);
+  --grid-columns:    12;
+
+  /* ------- Border Radius ------- */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ------- Shadows ------- */
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md:   0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg:   0 8px 30px rgba(0, 0, 0, 0.10);
+  --shadow-xl:   0 16px 50px rgba(0, 0, 0, 0.12);
+
+  /* ------- Transition / Animation ------- */
+  --ease-default:    cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out:        cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 300ms;
+  --duration-slow:   500ms;
+  /* 스크롤 애니메이션용 */
+  --reveal-duration: 0.8s;
+  --reveal-distance: 40px;
+  --reveal-ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ------- Z-Index ------- */
+  --z-base:      1;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-header:    300;
+  --z-overlay:   400;
+  --z-modal:     500;
+}

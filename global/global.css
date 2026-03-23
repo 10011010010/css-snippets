@@ -1,0 +1,261 @@
+/* ============================================
+   FEEDUS - Base Styles, Utilities & Overrides
+   프론트엔드에서만 로드 (에디터 제외)
+   ============================================ */
+
+/* ===========================================
+   1. Base / Reset
+   =========================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  letter-spacing: var(--ls-normal);
+  word-break: keep-all;          /* 한국어 줄바꿈 최적화 */
+  overflow-wrap: break-word;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+a:hover {
+  color: var(--color-link-hover);
+}
+
+/* ===========================================
+   2. Typography Utility Classes
+   =========================================== */
+/* Bricks에서 클래스로 바로 사용 가능 */
+.text-display {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+}
+.text-h1 {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+}
+.text-h2 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+}
+.text-h3 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+}
+.text-h4 {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+}
+.text-body-lg {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-normal);
+}
+.text-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+}
+.text-body-sm {
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-normal);
+}
+.text-caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-normal);
+  color: var(--color-text-muted);
+}
+.text-overline {
+  font-size: var(--fs-overline);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+}
+/* 색상 유틸리티 */
+.text-primary       { color: var(--color-primary); }
+.text-secondary     { color: var(--color-text-secondary); }
+.text-muted         { color: var(--color-text-muted); }
+.text-white         { color: var(--color-white); }
+/* 폰트 웨이트 유틸리티 */
+.fw-light           { font-weight: var(--fw-light); }
+.fw-regular         { font-weight: var(--fw-regular); }
+.fw-medium          { font-weight: var(--fw-medium); }
+.fw-semibold        { font-weight: var(--fw-semibold); }
+.fw-bold            { font-weight: var(--fw-bold); }
+
+/* ===========================================
+   3. Scroll Reveal Animation
+   -------------------------------------------
+   사용법: 요소에 .reveal 클래스 추가
+   변형: .reveal-up (기본), .reveal-left, .reveal-right, .reveal-fade
+   지연: .reveal-d1 ~ .reveal-d5 (각 0.1s 간격)
+   =========================================== */
+/* 기본 reveal 상태 (숨김) */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity, transform;
+}
+/* 활성화 상태 */
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
+/* 방향 변형 */
+.reveal-up {
+  transform: translateY(var(--reveal-distance));
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(calc(var(--reveal-distance) * -1));
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity, transform;
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(var(--reveal-distance));
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity, transform;
+}
+.reveal-fade {
+  opacity: 0;
+  transform: none;
+  transition: opacity var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity;
+}
+.reveal-left.is-visible,
+.reveal-right.is-visible,
+.reveal-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
+/* 순차 지연 (stagger) */
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+/* 자식 요소 순차 애니메이션 - 부모에 .reveal-stagger 추가 */
+.reveal-stagger > .reveal:nth-child(1)  { transition-delay: 0.05s; }
+.reveal-stagger > .reveal:nth-child(2)  { transition-delay: 0.10s; }
+.reveal-stagger > .reveal:nth-child(3)  { transition-delay: 0.15s; }
+.reveal-stagger > .reveal:nth-child(4)  { transition-delay: 0.20s; }
+.reveal-stagger > .reveal:nth-child(5)  { transition-delay: 0.25s; }
+.reveal-stagger > .reveal:nth-child(6)  { transition-delay: 0.30s; }
+.reveal-stagger > .reveal:nth-child(7)  { transition-delay: 0.35s; }
+.reveal-stagger > .reveal:nth-child(8)  { transition-delay: 0.40s; }
+.reveal-stagger > .reveal:nth-child(9)  { transition-delay: 0.45s; }
+.reveal-stagger > .reveal:nth-child(10) { transition-delay: 0.50s; }
+/* 모션 감소 선호 사용자 대응 */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===========================================
+   4. Spacing Utility Classes (Bricks 작업용)
+   =========================================== */
+.mt-section  { margin-top: var(--section-gap); }
+.mb-section  { margin-bottom: var(--section-gap); }
+.py-section  { padding-top: var(--section-padding-y); padding-bottom: var(--section-padding-y); }
+.px-section  { padding-left: var(--section-padding-x); padding-right: var(--section-padding-x); }
+
+/* ===========================================
+   5. Bricks Builder Overrides / Helpers
+   =========================================== */
+/* Bricks 컨테이너 기본 max-width */
+.brxe-container {
+  max-width: var(--container-max);
+}
+/* 전체폭 섹션 */
+.full-width {
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+/* bg 유틸리티 */
+.bg-primary     { background-color: var(--color-primary); }
+.bg-primary-bg  { background-color: var(--color-primary-bg); }
+.bg-dark        { background-color: var(--color-gray-900); color: var(--color-white); }
+.bg-light       { background-color: var(--color-gray-50); }
+/* 버튼 기본 스타일 */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75em 1.75em;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  color: var(--color-white);
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75em 1.75em;
+  background-color: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-primary);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body);
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+}
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
