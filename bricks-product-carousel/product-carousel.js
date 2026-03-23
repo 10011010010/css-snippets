@@ -41,8 +41,11 @@
 
     products.forEach(function (product) {
       var slide = document.createElement("li");
-      slide.className = "splide__slide";
-      slide.appendChild(product);
+      slide.className = "splide__slide product " + product.className;
+      // 기존 product 내부 요소를 slide로 이동 (클래스/스타일 보존)
+      while (product.firstChild) {
+        slide.appendChild(product.firstChild);
+      }
       list.appendChild(slide);
     });
 
@@ -57,6 +60,7 @@
       type: "slide",
       perPage: 5,
       gap: "20px",
+      padding: "10px",
       pagination: false,
       arrows: true,
       drag: true,
