@@ -7,9 +7,32 @@
  *
  * Splide가 요구하는 DOM 구조를 JS가 자동으로 만들어줌
  * (기존 .products > .product 구조를 splide__list > splide__slide로 래핑)
+ *
+ * Slick처럼 고정 픽셀 너비 계산 방식 사용 (퍼센트 계산 오차 방지)
  */
 (function () {
   "use strict";
+
+  var GAP = 20;
+  var BREAKPOINTS = [
+    { max: 767,  perPage: 2, gap: 15 },
+    { max: 991,  perPage: 3, gap: GAP },
+    { max: 1199, perPage: 4, gap: GAP },
+    { max: Infinity, perPage: 5, gap: GAP },
+  ];
+
+  function getPerPage() {
+    var w = window.innerWidth;
+    for (var i = 0; i < BREAKPOINTS.length; i++) {
+      if (w <= BREAKPOINTS[i].max) return BREAKPOINTS[i];
+    }
+    return BREAKPOINTS[BREAKPOINTS.length - 1];
+  }
+
+  function calcFixedWidth(containerWidth) {
+    var bp = getPerPage();
+    return Math.floor((containerWidth - bp.gap * (bp.perPage - 1)) / bp.perPage);
+  }
 
   function initCarousel(el) {
     if (el.dataset.splideInit) return;
@@ -20,15 +43,6 @@
 
     var products = productList.querySelectorAll(":scope > .product");
     if (!products.length) return;
-
-    // Splide DOM 구조 생성
-    // <div class="splide">
-    //   <div class="splide__track">
-    //     <ul class="splide__list">
-    //       <li class="splide__slide">...product...</li>
-    //     </ul>
-    //   </div>
-    // </div>
 
     var splideRoot = document.createElement("div");
     splideRoot.className = "splide";
@@ -42,7 +56,6 @@
     products.forEach(function (product) {
       var slide = document.createElement("li");
       slide.className = "splide__slide product " + product.className;
-      // 기존 product 내부 요소를 slide로 이동 (클래스/스타일 보존)
       while (product.firstChild) {
         slide.appendChild(product.firstChild);
       }
@@ -51,25 +64,36 @@
 
     track.appendChild(list);
     splideRoot.appendChild(track);
-
-    // 기존 .products를 Splide 구조로 교체
     productList.replaceWith(splideRoot);
 
-    // Splide 초기화
-    new Splide(splideRoot, {
+    // 컨테이너 실제 너비 기반 고정 픽셀 계산 (Slick 방식)
+    var containerWidth = el.clientWidth;
+    var bp = getPerPage();
+
+    var splide = new Splide(splideRoot, {
       type: "slide",
-      perPage: 5,
-      gap: "20px",
+      fixedWidth: calcFixedWidth(containerWidth) + "px",
+      gap: bp.gap + "px",
       pagination: false,
       arrows: true,
       drag: true,
       snap: true,
-      breakpoints: {
-        1199: { perPage: 4 },
-        991:  { perPage: 3 },
-        767:  { perPage: 2, gap: "15px" },
-      },
     }).mount();
+
+    // 리사이즈 시 재계산
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        var newWidth = el.clientWidth;
+        var newBp = getPerPage();
+        splide.options = {
+          fixedWidth: calcFixedWidth(newWidth) + "px",
+          gap: newBp.gap + "px",
+        };
+        splide.refresh();
+      }, 150);
+    });
   }
 
   function init() {
