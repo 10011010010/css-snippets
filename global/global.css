@@ -28,10 +28,26 @@ body {
   word-break: keep-all;          /* 한국어 줄바꿈 최적화 */
   overflow-wrap: break-word;
 }
-img {
+img,
+video,
+svg,
+canvas {
   max-width: 100%;
   height: auto;
   display: block;
+}
+iframe,
+embed,
+object {
+  max-width: 100%;
+}
+/* 컨테이너 overflow 방지 - 자식이 부모를 넘치지 않도록 */
+.brxe-section,
+.brxe-container,
+.brxe-block,
+.brxe-div {
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 a {
   color: var(--color-link);
