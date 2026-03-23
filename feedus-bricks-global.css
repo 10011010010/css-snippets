@@ -141,7 +141,7 @@ h1, .brxe-heading[data-tag="h1"] {
   font-size: 40px;
   line-height: 126%;
   letter-spacing: -0.05em;
-  margin: 0 0 30px 0;
+  margin: 0 0 30px 0 !important;
 }
 
 @media only screen and (min-width: 600px) {
@@ -162,7 +162,7 @@ h2, .brxe-heading[data-tag="h2"] {
   font-size: 36px;
   line-height: 127%;
   letter-spacing: -0.05em;
-  margin: 0 0 30px 0;
+  margin: 0 0 30px 0 !important;
 }
 
 @media only screen and (min-width: 600px) {
@@ -183,7 +183,7 @@ h3, .brxe-heading[data-tag="h3"] {
   line-height: 155%;
   letter-spacing: -0.03em;
   font-weight: 500;
-  margin: 0 0 30px 0;
+  margin: 0 0 30px 0 !important;
 }
 
 h4, .brxe-heading[data-tag="h4"] {
@@ -207,7 +207,7 @@ li, span, label, select, option, textarea {
   font-weight: 300;
   line-height: 150%;
   letter-spacing: -0.03em;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px 0 !important;
 }
 
 a {
