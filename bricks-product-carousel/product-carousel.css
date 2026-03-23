@@ -1,0 +1,145 @@
+/* ===========================================
+   Bricks Builder - Responsive Product Carousel
+   Products 요소를 1줄 캐러셀로 변환
+   =========================================== */
+
+/* --- 캐러셀 래퍼 --- */
+.brxe-products.product-carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- 상품 리스트: 가로 스크롤 1줄 고정 --- */
+.brxe-products.product-carousel > .products {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  /* 스크롤바 숨기기 */
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE/Edge */
+}
+
+.brxe-products.product-carousel > .products::-webkit-scrollbar {
+  display: none;                   /* Chrome/Safari */
+}
+
+/* --- 개별 상품 카드 --- */
+.brxe-products.product-carousel > .products > .product {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+}
+
+/* --- 반응형 썸네일 갯수 --- */
+
+/* Desktop (1200px+): 5개 */
+@media (min-width: 1200px) {
+  .brxe-products.product-carousel > .products > .product {
+    width: calc((100% - 80px) / 5);  /* gap 20px × 4 = 80px */
+  }
+}
+
+/* Tablet landscape (992px ~ 1199px): 4개 */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .brxe-products.product-carousel > .products > .product {
+    width: calc((100% - 60px) / 4);  /* gap 20px × 3 = 60px */
+  }
+}
+
+/* Tablet portrait (768px ~ 991px): 3개 */
+@media (min-width: 768px) and (max-width: 991px) {
+  .brxe-products.product-carousel > .products > .product {
+    width: calc((100% - 40px) / 3);  /* gap 20px × 2 = 40px */
+  }
+}
+
+/* Mobile (481px ~ 767px): 2개 */
+@media (min-width: 481px) and (max-width: 767px) {
+  .brxe-products.product-carousel > .products > .product {
+    width: calc((100% - 20px) / 2);  /* gap 20px × 1 = 20px */
+  }
+}
+
+/* Small mobile (~480px): 1개 */
+@media (max-width: 480px) {
+  .brxe-products.product-carousel > .products > .product {
+    width: 100%;
+  }
+}
+
+/* --- 화살표 버튼 --- */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 0;  /* 텍스트 숨기기 */
+}
+
+.carousel-arrow:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-arrow--prev {
+  left: -6px;
+}
+
+.carousel-arrow--next {
+  right: -6px;
+}
+
+/* 화살표 아이콘 (SVG 대신 CSS로 생성) */
+.carousel-arrow::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-top: 2.5px solid #333;
+  border-right: 2.5px solid #333;
+}
+
+.carousel-arrow--prev::before {
+  transform: rotate(-135deg);
+  margin-left: 3px;
+}
+
+.carousel-arrow--next::before {
+  transform: rotate(45deg);
+  margin-right: 3px;
+}
+
+/* 끝에 도달하면 화살표 숨기기 */
+.carousel-arrow[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- 선택 상태 (이미지의 파란 테두리) --- */
+.brxe-products.product-carousel > .products > .product.is-active .attachment-woocommerce_thumbnail,
+.brxe-products.product-carousel > .products > .product:focus-within .attachment-woocommerce_thumbnail {
+  outline: 2px solid #2196F3;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
