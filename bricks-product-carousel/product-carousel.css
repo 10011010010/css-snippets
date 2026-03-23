@@ -23,6 +23,11 @@
   flex-shrink: 0;
 }
 
+/* 마지막 슬라이드 여분 마진 제거 → 좌우 균등 배분 */
+.product-carousel .splide__slide:last-child {
+  margin-right: 0 !important;
+}
+
 /* --- 기존 WooCommerce 버튼 스타일 보존 --- */
 .product-carousel .splide__slide .button {
   all: revert;
