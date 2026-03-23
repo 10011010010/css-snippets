@@ -206,11 +206,19 @@ a:hover {
   overflow: visible;
 }
 
-/* Container 하단 구분선 (Redbrick 스타일)
-   - 모든 섹션 컨테이너 하단에 primary color 라인 자동 적용
-   - 컨테이너 좌우 패딩만큼 안쪽에서 시작 */
-.brxe-container::after,
-.brxe-section > .brxe-container::after {
+/* ==========================================================================
+   구분선 시스템 (클래스 기반)
+   - 기본: 라인 없음
+   - .feedus-line 클래스를 붙이면 하단 구분선 생성
+   - 라인이 있는 섹션은 여백(padding)이 자동 적용됨
+   ========================================================================== */
+
+/* --- 기본 라인: 클래스 붙이면 활성화 --- */
+.feedus-line {
+  position: relative;
+}
+
+.feedus-line::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -222,27 +230,68 @@ a:hover {
   z-index: 1;
 }
 
-/* 헤더 내부 컨테이너 하단 라인 */
-#brx-header .brxe-container::after,
-header .brxe-container::after,
-.feedus-header .brxe-container::after {
+/* --- 라인 붙은 섹션/컨테이너 → 여백 자동화 --- */
+.brxe-section.feedus-line,
+.brxe-container.feedus-line,
+.brxe-div.feedus-line,
+.brxe-block.feedus-line {
+  padding-bottom: var(--feedus-row-padding-bottom);
+}
+
+.brxe-section.feedus-line + .brxe-section,
+.brxe-container.feedus-line + .brxe-container,
+.brxe-div.feedus-line + .brxe-div,
+.brxe-block.feedus-line + .brxe-block {
+  padding-top: var(--feedus-row-padding-top);
+}
+
+/* --- 라인 변형: 풀폭 (패딩 무시, 엣지 투 엣지) --- */
+.feedus-line-full {
+  position: relative;
+}
+
+.feedus-line-full::after {
   content: "";
   position: absolute;
   bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--feedus-primary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- 라인 변형: 흰색 (녹색 배경 위) --- */
+.feedus-line-white::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- 라인 변형: 상단 라인 --- */
+.feedus-line-top {
+  position: relative;
+}
+
+.feedus-line-top::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: auto;
   left: var(--feedus-container-padding);
   width: calc(100% - var(--feedus-container-padding) * 2);
   height: 1px;
   background-color: var(--feedus-primary);
   pointer-events: none;
+  z-index: 1;
 }
 
-/* 풋터 내부 라인 (흰색) */
-.feedus-footer .brxe-container::after,
-#brx-footer .brxe-container::after {
-  background-color: rgba(255, 255, 255, 0.2);
+/* --- Row 내부 라인 (Row/Block에 붙이는 용도) --- */
+.feedus-row-line {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-/* Row/Block 타이틀 행 하단 라인 */
 .feedus-row-line::after {
   content: "";
   position: absolute;
@@ -254,19 +303,27 @@ header .brxe-container::after,
   pointer-events: none;
 }
 
-/* 구분선 제거 클래스 */
-.no-line .brxe-container::after,
-.brxe-container.no-line::after,
-.brxe-section.no-line .brxe-container::after,
-.brxe-section.no-line > .brxe-container::after {
-  display: none;
-}
+/* --- 여백 자동화: 섹션 사이즈별 --- */
+.feedus-line.feedus-spacing-sm { padding-bottom: 15px; }
+.feedus-line.feedus-spacing-md { padding-bottom: 30px; }
+.feedus-line.feedus-spacing-lg { padding-bottom: 50px; }
+.feedus-line.feedus-spacing-xl { padding-bottom: 80px; }
 
-/* 풀폭(edge-to-edge) 라인 - 패딩 무시하고 전체 너비 */
-.feedus-line-full .brxe-container::after,
-.brxe-container.feedus-line-full::after {
-  left: 0;
-  width: 100%;
+.feedus-line.feedus-spacing-sm + * { padding-top: 15px; }
+.feedus-line.feedus-spacing-md + * { padding-top: 30px; }
+.feedus-line.feedus-spacing-lg + * { padding-top: 50px; }
+.feedus-line.feedus-spacing-xl + * { padding-top: 80px; }
+
+@media screen and (min-width: 768px) {
+  .feedus-line.feedus-spacing-sm { padding-bottom: 20px; }
+  .feedus-line.feedus-spacing-md { padding-bottom: 40px; }
+  .feedus-line.feedus-spacing-lg { padding-bottom: 70px; }
+  .feedus-line.feedus-spacing-xl { padding-bottom: 100px; }
+
+  .feedus-line.feedus-spacing-sm + * { padding-top: 20px; }
+  .feedus-line.feedus-spacing-md + * { padding-top: 40px; }
+  .feedus-line.feedus-spacing-lg + * { padding-top: 70px; }
+  .feedus-line.feedus-spacing-xl + * { padding-top: 100px; }
 }
 
 /* Bricks Row / Block */
@@ -292,7 +349,9 @@ header,
               background-color var(--feedus-duration-medium) ease;
 }
 
-#brx-header::after {
+/* 헤더 하단 라인은 항상 표시 (고정 헤더 구분) */
+#brx-header::after,
+header.feedus-header::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -300,6 +359,7 @@ header,
   width: calc(100% - var(--feedus-container-padding) * 2);
   height: 1px;
   background-color: var(--feedus-primary);
+  pointer-events: none;
 }
 
 /* Header 높이만큼 본문 패딩 */
@@ -994,8 +1054,11 @@ textarea::placeholder {
   color: var(--feedus-white);
 }
 
-.feedus-green-section .brxe-container::after {
-  background-color: var(--feedus-white);
+/* 녹색 섹션 내부에서 .feedus-line 사용 시 흰색 라인 */
+.feedus-green-section .feedus-line::after,
+.feedus-green-section .feedus-row-line::after,
+.brxe-section.bg-primary .feedus-line::after {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .feedus-green-section a:hover {
