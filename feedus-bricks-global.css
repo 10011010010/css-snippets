@@ -136,7 +136,7 @@ h1, h2, h3, h4, h5, h6,
 
 /* --- h1 : 히어로 대제목 (디자인 시안: 74pt / 93pt / tracking -50) --- */
 h1, .brxe-heading[data-tag="h1"] {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 40px;
   line-height: 126%;
   letter-spacing: -0.05em;
@@ -157,7 +157,7 @@ h1, .brxe-heading[data-tag="h1"] {
 
 /* --- h2 : 섹션 제목 (Redbrick "Make it more chocolatey" 스타일) --- */
 h2, .brxe-heading[data-tag="h2"] {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 36px;
   line-height: 127%;
   letter-spacing: -0.05em;
@@ -203,7 +203,7 @@ li, span, label, select, option, textarea {
   font-family: var(--feedus-font-body);
   font-size: 18px;
   color: var(--feedus-primary);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 150%;
   letter-spacing: -0.03em;
   margin: 0 0 20px 0 !important;
