@@ -9,9 +9,9 @@
    ========================================================================== */
 :root {
   /* Brand Colors */
-  --feedus-primary: #1B7340;
-  --feedus-primary-rgb: 27, 115, 64;
-  --feedus-primary-hover: rgba(27, 115, 64, 0.5);
+  --feedus-primary: #007D51;
+  --feedus-primary-rgb: 0, 125, 81;
+  --feedus-primary-hover: rgba(0, 125, 81, 0.5);
   --feedus-white: #ffffff;
   --feedus-black: #1a1a1a;
   --feedus-gray-light: #f2f2f2;
