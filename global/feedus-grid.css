@@ -1,39 +1,17 @@
 /* ==========================================================================
-   FEEDUS - 글로벌 Grid 반응형 유틸리티
-   브릭스에서 Grid 설정 후 이 클래스를 추가하면 모바일에서 자동 1컬럼
+   FEEDUS - 글로벌 Grid 반응형
+   브릭스에서 Grid 설정한 모든 요소가 모바일에서 자동 1컬럼
+   클래스 추가 필요 없음
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   .feedus-grid-responsive
-   어떤 컬럼 수든 태블릿 이하에서 자동 1컬럼 전환
+   모바일 (≤767px): display: grid인 모든 요소 → 1컬럼
    -------------------------------------------------------------------------- */
-@media screen and (max-width: 991px) {
-  .feedus-grid-responsive {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   컬럼 수 지정 유틸리티 (데스크탑 기준)
-   브릭스 UI에서 Grid 설정하는 대신 클래스로도 사용 가능
-   -------------------------------------------------------------------------- */
-.feedus-grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
-.feedus-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
-.feedus-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
-.feedus-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); }
-
-/* 태블릿: 2~3컬럼은 유지, 4~5컬럼은 축소 */
-@media screen and (max-width: 991px) {
-  .feedus-grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .feedus-grid-5 { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* 모바일: 전부 1컬럼 */
 @media screen and (max-width: 767px) {
-  .feedus-grid-2,
-  .feedus-grid-3,
-  .feedus-grid-4,
-  .feedus-grid-5 {
+  .brxe-container[style*="grid"],
+  .brxe-div[style*="grid"],
+  .brxe-block[style*="grid"],
+  .brxe-section[style*="grid"] {
     grid-template-columns: 1fr !important;
   }
 }
