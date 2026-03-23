@@ -31,12 +31,12 @@
 /* --- 화살표: 오른쪽 아래 배치 --- */
 .product-carousel .splide {
   position: relative;
-  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
 .product-carousel .splide__arrows {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 10px;
   display: flex;
   gap: 8px;
