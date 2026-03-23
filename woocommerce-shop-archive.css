@@ -24,13 +24,8 @@
   pointer-events: none;
 }
 
+/* 타이틀 스타일은 글로벌 CSS h1에서 관리 */
 .bricks-archive-title-wrapper .title {
-  font-family: var(--feedus-font-heading);
-  font-weight: var(--fw-bold);
-  font-size: clamp(3rem, 8vw, 5rem);
-  line-height: 126%;
-  letter-spacing: -0.05em;
-  color: var(--feedus-primary);
   margin-bottom: 0 !important;
 }
 
