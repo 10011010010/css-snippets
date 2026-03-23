@@ -30,8 +30,10 @@
   --feedus-section-gap-mobile: 0px;
   --feedus-section-gap-desktop: 0px;
   --feedus-container-padding: 20px;
+  --feedus-inner-padding: 10px;
   --feedus-row-padding-top: 20px;
   --feedus-row-padding-bottom: 20px;
+  --feedus-card-gap: 10px;
 
   /* Layout */
   --feedus-page-width: 100%;
@@ -195,7 +197,25 @@ a:hover {
   }
 }
 
-/* Bricks Container (내부 컨테이너) */
+/* ==========================================================================
+   자동 여백 시스템 (Redbrick 구조)
+
+   Redbrick 여백 구조:
+   .container        → padding: 0 20px     (바깥 컨테이너)
+   .listing-container → padding: 0 10px     (내부 래퍼)
+   .column           → padding: 0 10px     (각 컬럼/카드)
+
+   결과: 화면 엣지 ~ 카드 = 20+10 = 30px
+         카드 ~ 카드 = 10+10 = 20px
+
+   Bricks 매핑:
+   brxe-section      → 풀폭 섹션
+   brxe-container    → 바깥 패딩 (20px)
+   brxe-div/block    → 내부 패딩 (10px)
+   개별 카드/컬럼     → 카드 갭 (10px)
+   ========================================================================== */
+
+/* Bricks Container (바깥 컨테이너 - 좌우 20px) */
 .brxe-container {
   width: 100%;
   max-width: 100%;
@@ -204,6 +224,112 @@ a:hover {
   margin: 0 auto;
   position: relative;
   overflow: visible;
+}
+
+/* Container 안의 Row/Div/Block → 내부 여백 10px (listing-container 역할) */
+.brxe-container > .brxe-div,
+.brxe-container > .brxe-block {
+  padding-left: var(--feedus-inner-padding);
+  padding-right: var(--feedus-inner-padding);
+}
+
+/* Row 내부 컬럼(자식 div/block) → 카드 좌우 여백 10px */
+.brxe-container > .brxe-div > .brxe-div,
+.brxe-container > .brxe-div > .brxe-block,
+.brxe-container > .brxe-block > .brxe-div,
+.brxe-container > .brxe-block > .brxe-block {
+  padding-left: var(--feedus-card-gap);
+  padding-right: var(--feedus-card-gap);
+}
+
+/* Flex/Grid row 일 때 gap으로 카드 간격 */
+.brxe-container .brxe-div[style*="display:flex"],
+.brxe-container .brxe-div[style*="display: flex"],
+.brxe-container .brxe-block[style*="display:flex"],
+.brxe-container .brxe-block[style*="display: flex"] {
+  gap: calc(var(--feedus-card-gap) * 2);
+}
+
+/* Bricks 자체 grid/slider → gap 자동 */
+.brxe-container .brx-grid,
+.brxe-container .brxe-slider {
+  gap: calc(var(--feedus-card-gap) * 2);
+}
+
+/* Row 상하 여백 자동 */
+.brxe-container > .brxe-div,
+.brxe-container > .brxe-block {
+  padding-top: var(--feedus-row-padding-top);
+  padding-bottom: var(--feedus-row-padding-bottom);
+}
+
+/* 타이틀 Row (간격 좁게) */
+.brxe-container > .brxe-div.feedus-title-row,
+.brxe-container > .brxe-block.feedus-title-row {
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+
+/* 태블릿/데스크탑 여백 확대 */
+@media screen and (min-width: 768px) {
+  :root {
+    --feedus-container-padding: 30px;
+    --feedus-inner-padding: 10px;
+    --feedus-card-gap: 10px;
+  }
+
+  .brxe-container > .brxe-div,
+  .brxe-container > .brxe-block {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .brxe-container > .brxe-div.feedus-title-row,
+  .brxe-container > .brxe-block.feedus-title-row {
+    padding-top: 15px;
+    padding-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --feedus-container-padding: 40px;
+  }
+}
+
+/* ==========================================================================
+   여백 제거/오버라이드 클래스
+   ========================================================================== */
+
+/* 내부 여백 제거 (풀블리드 이미지 등) */
+.feedus-no-padding {
+  padding: 0 !important;
+}
+
+.feedus-no-padding-x {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.feedus-no-padding-y {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 컨테이너 패딩만 제거 (카드 여백은 유지) */
+.brxe-container.feedus-flush {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* 카드 갭만 제거 */
+.feedus-no-gap {
+  gap: 0 !important;
+}
+
+.feedus-no-gap > * {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* ==========================================================================
