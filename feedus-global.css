@@ -206,6 +206,17 @@ object {
   max-width: 100%;
 }
 
+/* Bricks 이미지 요소 - 인라인 사이즈 오버라이드 */
+.brxe-image {
+  max-width: 100%;
+}
+.brxe-image img {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain;
+}
+
 /* 컨테이너 overflow 방지 - 자식이 부모를 넘치지 않도록 */
 .brxe-section,
 .brxe-container,
@@ -213,6 +224,7 @@ object {
 .brxe-div {
   overflow-wrap: break-word;
   min-width: 0;
+  overflow: hidden;
 }
 
 a {
