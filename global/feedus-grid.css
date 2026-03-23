@@ -5,13 +5,11 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   모바일 (≤767px): display: grid인 모든 요소 → 1컬럼
+   모바일 (≤767px): 브릭스 Grid 요소 전부 → 1컬럼
+   브릭스가 Grid 설정 시 자동으로 .brx-grid 클래스를 추가함
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 767px) {
-  .brxe-container[style*="grid"],
-  .brxe-div[style*="grid"],
-  .brxe-block[style*="grid"],
-  .brxe-section[style*="grid"] {
+  .brx-grid {
     grid-template-columns: 1fr !important;
   }
 }
