@@ -114,7 +114,7 @@
 
 
   /* ------- Layout ------- */
-  --container-max:   1280px;
+  --container-max:   100%;
   --container-wide:  1440px;
   --container-narrow: 960px;
   --gutter:          clamp(1rem, 2vw, 2rem);
@@ -206,17 +206,6 @@ object {
   max-width: 100%;
 }
 
-/* Bricks 이미지 요소 - 인라인 사이즈 오버라이드 */
-.brxe-image {
-  max-width: 100%;
-}
-.brxe-image img {
-  max-width: 100% !important;
-  width: 100% !important;
-  height: auto !important;
-  object-fit: contain;
-}
-
 /* 컨테이너 overflow 방지 - 자식이 부모를 넘치지 않도록 */
 .brxe-section,
 .brxe-container,
@@ -224,7 +213,6 @@ object {
 .brxe-div {
   overflow-wrap: break-word;
   min-width: 0;
-  overflow: hidden;
 }
 
 a {
@@ -486,4 +474,96 @@ a:hover {
 .btn-outline:hover {
   background-color: var(--color-primary);
   color: var(--color-white);
+}
+
+/* 컨테이너 기본 여백 (Redbrick Coffee 스타일) */
+.brxe-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* 컨테이너 안의 모든 직계 자식에 추가 여백 */
+.brxe-container > * {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+/* ===========================================
+   7. Hero 1:1 Grid (Redbrick Coffee 스타일)
+   -------------------------------------------
+   사용법:
+   - 컨테이너에 .grid-hero 추가
+   - 텍스트 영역에 .grid-hero__text 추가
+   - 이미지 영역에 .grid-hero__image 추가
+   - 이미지 태그에 .grid-hero__img 추가
+   - 이미지 왼쪽 배치: 컨테이너에 .grid-hero--img-left 추가
+
+   동작:
+   - PC: 1:1 나란히, 이미지 4/3 직사각형
+   - 태블릿: 1:1 나란히, 이미지 1/1 정사각형
+   - 모바일: 1단 세로, 텍스트 위 이미지 아래
+   =========================================== */
+
+/* 히어로 그리드 컨테이너 */
+.grid-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  align-items: stretch;
+}
+
+/* 텍스트 영역 */
+.grid-hero__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--section-padding-y) var(--section-padding-x);
+  min-width: 0;
+}
+
+/* 이미지 영역 */
+.grid-hero__image {
+  overflow: hidden;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+}
+
+/* 이미지 태그 */
+.grid-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 이미지 좌/우 배치 변형 */
+.grid-hero--img-left .grid-hero__image {
+  order: -1;
+}
+
+/* 태블릿: 이미지 정사각형으로 전환 */
+@media (max-width: 1024px) {
+  .grid-hero__image {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* 모바일: 1단 세로 */
+@media (max-width: 768px) {
+  .grid-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-hero__image {
+    aspect-ratio: 4 / 3;
+    order: 2;
+  }
+
+  .grid-hero__text {
+    order: 1;
+    padding: var(--space-2xl) var(--section-padding-x);
+  }
 }
