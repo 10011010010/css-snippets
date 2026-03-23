@@ -18,11 +18,20 @@
   --feedus-gray: #6c757d;
   --feedus-bg: #ffffff;
 
-  /* Typography */
-  --feedus-font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --feedus-font-heading: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --feedus-font-body-weight: 400;
-  --feedus-font-heading-weight: 700;
+  /* Typography (Font Family) - Adobe Fonts: omnigothic */
+  --font-primary: "omnigothic", -apple-system, "Malgun Gothic", sans-serif;
+  --font-fallback: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif;
+  --feedus-font-body: var(--font-primary);
+  --feedus-font-heading: var(--font-primary);
+
+  /* Font Weights */
+  --fw-light: 200;
+  --fw-regular: 300;
+  --fw-medium: 400;
+  --fw-semibold: 500;
+  --fw-bold: 600;
+  --feedus-font-body-weight: var(--fw-regular);
+  --feedus-font-heading-weight: var(--fw-bold);
   --feedus-font-body-size: 16px;
   --feedus-font-heading-scale: 1.0;
 
@@ -983,6 +992,13 @@ textarea::placeholder {
 .text-primary { color: var(--feedus-primary); }
 .text-white { color: var(--feedus-white); }
 .text-dark { color: var(--feedus-black); }
+
+/* Font Weights */
+.fw-light { font-weight: var(--fw-light); }
+.fw-regular { font-weight: var(--fw-regular); }
+.fw-medium { font-weight: var(--fw-medium); }
+.fw-semibold { font-weight: var(--fw-semibold); }
+.fw-bold { font-weight: var(--fw-bold); }
 
 /* Text Alignment */
 .text-center { text-align: center; }
