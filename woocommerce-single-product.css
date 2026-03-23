@@ -1,0 +1,459 @@
+/* ============================================
+   WooCommerce Single Product - Redbrick Style
+   피더스 상품 상세페이지 커스터마이즈
+
+   글로벌 root 변수 적극 활용
+   ============================================ */
+
+/* ==========================================================================
+   1. 브레드크럼 숨김
+   ========================================================================== */
+.woocommerce-breadcrumb {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2. SKU / Category 숨김
+   ========================================================================== */
+.product_meta {
+  display: none !important;
+}
+
+/* ==========================================================================
+   3. "사이즈" 라벨(th) 숨김
+   ========================================================================== */
+.variations th.label {
+  display: none !important;
+}
+
+/* ==========================================================================
+   4. 상품 상세 레이아웃 - 2컬럼 (이미지 | 정보)
+   ========================================================================== */
+.single-product div.product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--feedus-container-padding);
+  align-items: start;
+  max-width: 100%;
+  padding: var(--feedus-row-padding-top) 0;
+}
+
+/* ==========================================================================
+   5. 좌측 이미지 영역 - 배경 #F2F2F2, radius 25px
+   ========================================================================== */
+.single-product .woocommerce-product-gallery {
+  background-color: var(--feedus-gray-light);
+  border-radius: var(--feedus-border-radius);
+  padding: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+.single-product .woocommerce-product-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+/* 갤러리 줌 트리거 숨김 */
+.single-product .woocommerce-product-gallery__trigger {
+  display: none !important;
+}
+
+/* ==========================================================================
+   6. 우측 상품 정보 영역
+   ========================================================================== */
+.single-product .summary.entry-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 10px;
+}
+
+/* 상품명 */
+.single-product .product_title.entry-title {
+  font-family: var(--feedus-font-heading);
+  font-weight: var(--feedus-font-heading-weight);
+  font-size: 32px;
+  line-height: 130%;
+  letter-spacing: -0.03em;
+  color: var(--feedus-primary);
+  margin-bottom: 0 !important;
+}
+
+/* 가격 */
+.single-product .summary .price {
+  font-family: var(--feedus-font-body);
+  font-size: 20px;
+  font-weight: var(--fw-medium);
+  color: var(--feedus-primary);
+  margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   7. 옵션 선택 (variations) 스타일
+   ========================================================================== */
+.single-product .variations {
+  width: 100%;
+  border: none;
+}
+
+.single-product .variations td.value {
+  padding: 0;
+}
+
+.single-product .variations select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background: var(--feedus-white);
+  border: 1px solid var(--feedus-primary);
+  border-radius: var(--feedus-border-radius-pill);
+  padding: 10px 40px 10px 20px;
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  font-weight: var(--fw-regular);
+  color: var(--feedus-primary);
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23007D51' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 10px;
+  transition: border-color var(--feedus-duration-default) ease;
+}
+
+.single-product .variations select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--feedus-primary-rgb), 0.2);
+}
+
+/* Clear 링크 */
+.single-product .reset_variations {
+  font-family: var(--feedus-font-body);
+  font-size: 14px;
+  color: var(--feedus-gray);
+  margin-top: 8px;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   8. 수량 선택 + 장바구니 버튼
+   ========================================================================== */
+.single-product .quantity {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--feedus-primary);
+  border-radius: var(--feedus-border-radius-pill);
+  overflow: hidden;
+  height: 48px;
+}
+
+.single-product .quantity input.qty {
+  width: 50px;
+  text-align: center;
+  border: none;
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  color: var(--feedus-primary);
+  background: transparent;
+  -moz-appearance: textfield;
+  margin: 0 !important;
+}
+
+.single-product .quantity input.qty::-webkit-inner-spin-button,
+.single-product .quantity input.qty::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.single-product .quantity .action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+  cursor: pointer;
+  color: var(--feedus-primary);
+  transition: background var(--feedus-duration-default) ease;
+}
+
+.single-product .quantity .action:hover {
+  background: rgba(var(--feedus-primary-rgb), 0.08);
+}
+
+/* Add to cart 버튼 */
+.single-product .single_add_to_cart_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--feedus-primary);
+  color: var(--feedus-white);
+  border: none;
+  border-radius: var(--feedus-border-radius-pill);
+  padding: 0 32px;
+  height: 48px;
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  transition: opacity var(--feedus-duration-default) ease;
+  flex: 1;
+}
+
+.single-product .single_add_to_cart_button:hover {
+  opacity: 0.85;
+}
+
+/* 수량 + 버튼 가로 배치 */
+.single-product .woocommerce-variation-add-to-cart {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   9. 선택된 옵션 리스트 (JS로 생성)
+   ========================================================================== */
+.feedus-selected-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(var(--feedus-primary-rgb), 0.15);
+}
+
+.feedus-selected-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--feedus-gray-light);
+  border-radius: var(--feedus-border-radius);
+  font-family: var(--feedus-font-body);
+  font-size: 14px;
+  color: var(--feedus-primary);
+  letter-spacing: -0.03em;
+}
+
+.feedus-selected-item__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.feedus-selected-item__name {
+  font-weight: var(--fw-medium);
+}
+
+.feedus-selected-item__price {
+  font-weight: var(--fw-regular);
+  color: var(--feedus-gray);
+}
+
+.feedus-selected-item__qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.feedus-selected-item__qty button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(var(--feedus-primary-rgb), 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--feedus-primary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all var(--feedus-duration-default) ease;
+  padding: 0;
+}
+
+.feedus-selected-item__qty button:hover {
+  background: rgba(var(--feedus-primary-rgb), 0.1);
+}
+
+.feedus-selected-item__qty span {
+  min-width: 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  margin: 0 !important;
+}
+
+.feedus-selected-item__remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--feedus-gray);
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 0 0 8px;
+  transition: color var(--feedus-duration-default) ease;
+}
+
+.feedus-selected-item__remove:hover {
+  color: var(--feedus-primary);
+}
+
+/* 총합 표시 */
+.feedus-selected-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 0;
+  font-family: var(--feedus-font-body);
+  font-size: 18px;
+  font-weight: var(--fw-semibold);
+  color: var(--feedus-primary);
+  letter-spacing: -0.03em;
+  border-top: 1px solid var(--feedus-primary);
+}
+
+/* ==========================================================================
+   10. WooCommerce 탭 영역
+   ========================================================================== */
+.single-product .woocommerce-tabs {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(var(--feedus-primary-rgb), 0.15);
+  padding-top: var(--feedus-row-padding-top);
+}
+
+.single-product .woocommerce-tabs .wc-tabs {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--feedus-row-padding-bottom) 0 !important;
+  border-bottom: none;
+}
+
+.single-product .woocommerce-tabs .wc-tabs li a {
+  font-family: var(--feedus-font-body);
+  font-size: 16px;
+  font-weight: var(--fw-regular);
+  color: var(--feedus-gray);
+  text-decoration: none;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: all var(--feedus-duration-default) ease;
+}
+
+.single-product .woocommerce-tabs .wc-tabs li.active a {
+  color: var(--feedus-primary);
+  font-weight: var(--fw-semibold);
+  border-bottom-color: var(--feedus-primary);
+}
+
+/* ==========================================================================
+   11. 관련 상품 영역
+   ========================================================================== */
+.single-product section.related.products {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(var(--feedus-primary-rgb), 0.15);
+  padding-top: var(--feedus-row-padding-top);
+}
+
+.single-product section.related.products h2 {
+  font-family: var(--feedus-font-heading);
+  font-weight: var(--feedus-font-heading-weight);
+  font-size: 24px;
+  color: var(--feedus-primary);
+  margin-bottom: var(--feedus-row-padding-bottom) !important;
+}
+
+/* ==========================================================================
+   12. 반응형 - 글로벌 브레이크포인트 활용
+   ========================================================================== */
+
+/* 태블릿 (768px 이하) → 1컬럼 */
+@media screen and (max-width: 768px) {
+  .single-product div.product {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: var(--feedus-row-padding-top) 0;
+  }
+
+  .single-product .woocommerce-product-gallery {
+    border-radius: calc(var(--feedus-border-radius) * 0.6);
+    padding: 24px;
+  }
+
+  .single-product .product_title.entry-title {
+    font-size: 24px;
+  }
+
+  .single-product .summary .price {
+    font-size: 18px;
+  }
+
+  .single-product .woocommerce-variation-add-to-cart {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .single-product .quantity {
+    justify-content: center;
+  }
+
+  .single-product .single_add_to_cart_button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .feedus-selected-item {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .feedus-selected-item__qty {
+    margin-left: 0;
+  }
+}
+
+/* 모바일 (480px 이하) */
+@media screen and (max-width: 480px) {
+  .single-product .woocommerce-product-gallery {
+    padding: 16px;
+    border-radius: calc(var(--feedus-border-radius) * 0.4);
+  }
+
+  .single-product .product_title.entry-title {
+    font-size: 20px;
+  }
+
+  .single-product .summary .price {
+    font-size: 16px;
+  }
+
+  .single-product .variations select {
+    font-size: 14px;
+    padding: 8px 36px 8px 14px;
+  }
+
+  .single-product .quantity {
+    height: 42px;
+  }
+
+  .single-product .single_add_to_cart_button {
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .feedus-selected-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: calc(var(--feedus-border-radius) * 0.5);
+  }
+}
