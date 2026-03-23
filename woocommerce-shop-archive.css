@@ -8,14 +8,30 @@
 /* ==========================================================================
    1. 샵 페이지 타이틀
    ========================================================================== */
+.bricks-archive-title-wrapper {
+  position: relative;
+  padding-bottom: var(--feedus-row-padding-bottom);
+}
+
+.bricks-archive-title-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--feedus-primary);
+  pointer-events: none;
+}
+
 .bricks-archive-title-wrapper .title {
   font-family: var(--feedus-font-heading);
   font-weight: var(--fw-bold);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(3rem, 8vw, 5rem);
   line-height: 126%;
   letter-spacing: -0.05em;
   color: var(--feedus-primary);
-  margin-bottom: var(--feedus-row-padding-bottom) !important;
+  margin-bottom: 0 !important;
 }
 
 /* ==========================================================================
