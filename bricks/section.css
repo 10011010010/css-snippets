@@ -1,0 +1,21 @@
+/* Bricks Section (풀폭) */
+.brxe-section {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  overflow: visible;
+  position: relative;
+}
+
+/* Section 간 간격 제거 (풀페이지 스타일) */
+.brxe-section + .brxe-section {
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .brxe-section + .brxe-section {
+    margin-top: 40px;
+  }
+}
