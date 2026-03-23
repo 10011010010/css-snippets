@@ -3,15 +3,15 @@
    Products 요소를 Splide 캐러셀로 변환
    =========================================== */
 
-/* --- 캐러셀 컨테이너: 부모 패딩 무시하고 풀너비 --- */
+/* --- 캐러셀 컨테이너: 부모 패딩을 뚫고 풀너비 --- */
 .product-carousel {
   overflow: hidden;
-  width: 100% !important;
-  max-width: 100% !important;
+  width: calc(100% + var(--feedus-container-padding) * 2) !important;
+  max-width: none !important;
+  margin-left: calc(-1 * var(--feedus-container-padding)) !important;
+  margin-right: calc(-1 * var(--feedus-container-padding)) !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
   box-sizing: border-box !important;
 }
 
