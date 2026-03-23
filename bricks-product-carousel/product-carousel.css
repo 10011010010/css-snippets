@@ -3,17 +3,21 @@
    Products 요소를 Splide 캐러셀로 변환
    =========================================== */
 
-/* --- 캐러셀 컨테이너: 뷰포트 풀너비 강제 --- */
+/* --- 캐러셀 컨테이너 --- */
 .product-carousel {
   overflow: hidden;
-  width: 100vw !important;
-  max-width: none !important;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 부모 컨테이너 패딩 자동 제거 (캐러셀이 컨테이너 풀너비 차지) */
+.brxe-container:has(.product-carousel) {
   padding-left: 0 !important;
   padding-right: 0 !important;
-  box-sizing: border-box !important;
 }
+
+/* :has() 미지원 폴백 → Bricks에서 부모 컨테이너에 feedus-flush 클래스 추가 */
 
 /* --- Splide 기본 구조 오버라이드 --- */
 .product-carousel .splide__track {
