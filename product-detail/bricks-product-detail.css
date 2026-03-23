@@ -1,19 +1,161 @@
-/* ============================================
-   브릭스빌더 상품 상세페이지 - 보조 CSS
-   (레이아웃은 브릭스 UI에서 설정, 여기는 미세조정만)
-   ============================================ */
+/* ==========================================================================
+   FEEDUS - 상품 상세페이지 전용 CSS
+   글로벌 CSS(omnigothic, #007D51, pill 버튼 등) 위에 추가되는 보조 스타일만
+   ========================================================================== */
+
+/* ==========================================================================
+   1. STICKY 이미지 (좌측 컬럼)
+   Redbrick 스타일: 스크롤 시 이미지가 뷰포트에 고정
+   ========================================================================== */
+.product-image-sticky {
+  position: sticky;
+  top: var(--feedus-header-height, 80px);
+  align-self: flex-start;
+  height: fit-content;
+}
+
+/* 모바일: sticky 해제 → 이미지 위, 정보 아래 */
+@media screen and (max-width: 991px) {
+  .product-image-sticky {
+    position: relative;
+    top: auto;
+  }
+}
+
+/* ==========================================================================
+   2. 상품 정보 컬럼 (우측)
+   ========================================================================== */
+.product-info-col {
+  padding: 40px;
+}
+
+@media screen and (max-width: 767px) {
+  .product-info-col {
+    padding: 20px var(--feedus-container-padding, 20px);
+  }
+}
+
+/* ==========================================================================
+   3. Product Add to Cart 스타일 보완
+   (글로벌에서 .woocommerce .button 기본은 처리됨 — 여기는 추가 조정만)
+   ========================================================================== */
+
+/* Add to Cart 버튼 full-width */
+.product-info-col .cart .single_add_to_cart_button {
+  width: 100%;
+}
 
 /* 수량 input 스피너 제거 */
-.cart .quantity input[type="number"]::-webkit-outer-spin-button,
-.cart .quantity input[type="number"]::-webkit-inner-spin-button {
+.product-info-col .cart .quantity input[type="number"]::-webkit-outer-spin-button,
+.product-info-col .cart .quantity input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.cart .quantity input[type="number"] {
+
+.product-info-col .cart .quantity input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Add to Cart 버튼 full-width */
-.cart .single_add_to_cart_button {
-  width: 100% !important;
+/* 옵션(variation) 드롭다운 간격 */
+.product-info-col .variations {
+  margin-bottom: 20px;
+}
+
+.product-info-col .variations td {
+  padding: 8px 0;
+}
+
+.product-info-col .variations label {
+  font-size: 14px;
+  font-weight: var(--fw-medium, 400);
+  color: var(--feedus-primary);
+  margin-bottom: 4px !important;
+}
+
+/* ==========================================================================
+   4. Product Gallery 보완
+   ========================================================================== */
+
+/* 갤러리 이미지 비율 */
+.product-image-sticky .brxe-product-gallery img,
+.product-image-sticky .woocommerce-product-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   5. Origin 정보 섹션 (커피 상품 전용)
+   글로벌 feedus-grid-5 위에 추가
+   ========================================================================== */
+.origin-info-section .origin-header {
+  font-weight: var(--fw-bold, 600);
+  font-size: 14px;
+  margin-bottom: 8px !important;
+}
+
+.origin-info-section .origin-value {
+  font-size: 15px;
+  margin: 0 !important;
+}
+
+/* 모바일: 헤더 행 숨김 */
+@media screen and (max-width: 767px) {
+  .origin-info-section .origin-header-row {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   6. Related Products 타이틀 행
+   글로벌 feedus-section-title 활용 — 추가 조정만
+   ========================================================================== */
+.related-products-title {
+  margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   7. Product Title 사이즈 오버라이드 (상세페이지 전용)
+   글로벌 h1이 74px까지 커지므로, 상세페이지에선 축소
+   ========================================================================== */
+.product-info-col h1,
+.product-info-col .brxe-heading[data-tag="h1"],
+.product-info-col .brxe-product-title {
+  font-size: 32px;
+  margin-bottom: 16px !important;
+}
+
+@media screen and (min-width: 600px) {
+  .product-info-col h1,
+  .product-info-col .brxe-heading[data-tag="h1"],
+  .product-info-col .brxe-product-title {
+    font-size: 36px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .product-info-col h1,
+  .product-info-col .brxe-heading[data-tag="h1"],
+  .product-info-col .brxe-product-title {
+    font-size: 42px;
+  }
+}
+
+/* ==========================================================================
+   8. 픽업 정보
+   ========================================================================== */
+.pickup-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.pickup-info svg,
+.pickup-info .pickup-icon {
+  color: var(--feedus-primary);
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
 }
