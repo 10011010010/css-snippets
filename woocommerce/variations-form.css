@@ -128,9 +128,14 @@
 }
 
 /* Locked variation qty input: padding, color, always show spinner */
+.woocommerce-variation-price {
+  margin-bottom: 16px !important;
+}
+
 .wc-locked-variation-qty {
   padding: 8px 10px !important;
   color: #007D51 !important;
+  font-weight: 500 !important;
 }
 
 .wc-locked-variation-qty::-webkit-inner-spin-button,
