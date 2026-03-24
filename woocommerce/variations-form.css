@@ -59,6 +59,7 @@
 
 .variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
   order: 1;
+  margin: 0 !important;
 }
 
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart {
