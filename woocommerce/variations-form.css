@@ -99,3 +99,18 @@
   padding: 14px 40px;
   width: 100% !important;
 }
+
+/* 8) Locked variations container: text & border color primary */
+.wc-locked-variations-container b {
+  color: #007D51 !important;
+}
+
+.wc-locked-variations-container,
+.wc-locked-variations-container *{
+  color: #007D51 !important;
+  border-color: #007D51 !important;
+}
+
+.wc-locked-variations-container .wc-remove-locked-variation {
+  color: red !important;
+}
