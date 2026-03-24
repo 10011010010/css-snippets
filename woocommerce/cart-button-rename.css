@@ -1,0 +1,11 @@
+/* WooCommerce 장바구니 갱신 버튼 텍스트를 "수량 변경"으로 교체 */
+.woocommerce-cart .actions button[name="update_cart"] {
+  font-size: 0;
+  line-height: 0;
+}
+
+.woocommerce-cart .actions button[name="update_cart"]::after {
+  content: '수량 변경';
+  font-size: 16px;
+  line-height: normal;
+}
