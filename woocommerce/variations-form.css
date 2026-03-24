@@ -18,6 +18,12 @@
   font-weight: 500 !important;
 }
 
+/* Size select + options font color */
+.variations_form table.variations select,
+.variations_form table.variations select option {
+  color: #007D51 !important;
+}
+
 /* 2) Remove round border around quantity number input */
 .variations_form .quantity input.qty {
   border: none;
