@@ -21,16 +21,31 @@
   border-radius: 0;
 }
 
-/* 3) Remove bottom margin from minus button, add 14px margin-bottom to .quantity */
-.variations_form .quantity .action.minus {
-  margin-bottom: 0;
+/* 3) Remove bottom margin from +/- buttons, add 14px margin-bottom to .quantity */
+.variations_form .quantity .action.minus,
+.variations_form .quantity .action.plus {
+  margin-bottom: 0 !important;
 }
 
 .variations_form .quantity {
   margin-bottom: 14px;
 }
 
-/* 4) "Add All to Cart" button: text #007D51, bg #EBFE56, hover border #EBFE56 */
+/* 4) Button order: "Add to List" on top, "Add All to Cart" on bottom */
+.variations_form .wc-multiple-variation-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
+  order: 1;
+}
+
+.variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart {
+  order: 2;
+}
+
+/* 5) "Add All to Cart" button styling */
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart {
   color: #007D51;
   background-color: #EBFE56;
@@ -38,10 +53,25 @@
 }
 
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart:hover {
+  color: #ffffff;
+  background-color: #007D51;
+  border-color: #007D51;
+}
+
+/* 6) "Add to List" button styling */
+.variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
+  color: #ffffff;
+  background-color: #007D51;
+  border-color: #007D51;
+}
+
+.variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn:hover {
+  color: #007D51;
+  background-color: #EBFE56;
   border-color: #EBFE56;
 }
 
-/* 5) Button padding: 10px 30px → 14px 40px */
+/* 7) Button padding: 14px 40px */
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart,
 .variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
   padding: 14px 40px;
