@@ -19,3 +19,20 @@
   max-width: 100%;
   height: auto;
 }
+
+/* 모바일 가로(768px)부터 1컬럼 */
+@media (max-width: 768px) {
+  #brxe-uiuyag.brx-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #brxe-uiuyag {
+    flex-direction: column;
+  }
+
+  #brxe-uiuyag > .product-image-sticky,
+  #brxe-uiuyag > .product-info-col {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
