@@ -4,7 +4,6 @@ add_action('wp_head', function () {
     .variations_form .wc-locked-variations-container { display: block !important; margin-bottom: 15px; }
     .variations_form .wc-variation-mode-selector { display: none !important; }
     .variations_form .single_add_to_cart_button { display: none !important; }
-    .variations_form .woocommerce-variation-add-to-cart > .quantity { display: none !important; }
     </style>';
 });
 
@@ -12,18 +11,19 @@ add_action('wp_footer', function () {
     echo '<script>
     (function() {
         function fix() {
-            var s = document.getElementById("wc_variation_mode");
-            if (!s) return;
-            s.value = "multiple";
-            s.dispatchEvent(new Event("change", { bubbles: true }));
-            var b = document.querySelector(".wc-multiple-variation-buttons");
-            if (b) b.style.display = "flex";
-            var c = document.querySelector(".wc-locked-variations-container");
-            if (c) c.style.display = "block";
+            if (typeof jQuery === "undefined") return;
+            var $ = jQuery;
+            var $mode = $("#wc_variation_mode");
+            if (!$mode.length || $mode.val() === "multiple") return;
+            $mode.val("multiple").trigger("change");
         }
-        fix();
         if (typeof jQuery !== "undefined") {
-            jQuery(function() { setTimeout(fix, 100); setTimeout(fix, 500); setTimeout(fix, 1000); });
+            jQuery(function() {
+                setTimeout(fix, 200);
+                setTimeout(fix, 600);
+                setTimeout(fix, 1200);
+                jQuery("form.variations_form").on("wc_variation_form show_variation", fix);
+            });
         }
     })();
     </script>';
