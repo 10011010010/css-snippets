@@ -13,6 +13,11 @@
   text-align: left;
 }
 
+/* Size label font-weight */
+.variations_form table.variations th.label label {
+  font-weight: 500 !important;
+}
+
 /* 2) Remove round border around quantity number input */
 .variations_form .quantity input.qty {
   border: none;
