@@ -54,6 +54,7 @@
 .variations_form .wc-multiple-variation-buttons {
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
 .variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
@@ -68,7 +69,7 @@
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart {
   color: #007D51;
   background-color: #ffffff;
-  border-color: #EBFE56;
+  border-color: #007D51;
 }
 
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart:hover {
@@ -87,11 +88,12 @@
 .variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn:hover {
   color: #007D51;
   background-color: #ffffff;
-  border-color: #EBFE56;
+  border-color: #007D51;
 }
 
 /* 7) Button padding: 14px 40px */
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart,
 .variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
   padding: 14px 40px;
+  width: 100% !important;
 }
