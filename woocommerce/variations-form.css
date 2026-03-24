@@ -34,10 +34,12 @@
   font-weight: 500 !important;
 }
 
-/* 3) Remove bottom margin from +/- buttons, add 14px margin-bottom to .quantity */
+/* 3) +/- buttons: margin reset, border primary, circle shape */
 .variations_form .quantity .action.minus,
 .variations_form .quantity .action.plus {
   margin-bottom: 0 !important;
+  border-color: #007D51 !important;
+  border-radius: 100% !important;
 }
 
 .variations_form .quantity {
