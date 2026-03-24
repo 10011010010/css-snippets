@@ -1,0 +1,70 @@
+/*
+ * Fix: "Add Multiple Variations to Cart" 플러그인 버튼 표시 문제
+ *
+ * 문제: 플러그인의 JS가 Bricks Builder 환경에서 제대로 동작하지 않아
+ *       "Add to List" / "Add All to Cart" 버튼이 숨겨진 상태로 유지됨.
+ *
+ * 해결: 모드 셀렉터를 "Multiple" 기본으로 설정하고,
+ *       멀티플 버튼을 강제 표시, 싱글 버튼을 숨김 처리.
+ *
+ * 적용 위치: Bricks Builder > 커스텀 CSS 또는 워드프레스 추가 CSS
+ */
+
+/* ── 방법 1: CSS만으로 강제 표시 ── */
+
+/* 멀티플 버튼 강제 표시 (인라인 display:none 오버라이드) */
+.variations_form .wc-multiple-variation-buttons {
+    display: flex !important;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 선택된 변형 목록 영역 표시 */
+.variations_form .wc-locked-variations-container {
+    display: block !important;
+    margin-bottom: 15px;
+}
+
+/* 모드 셀렉터를 숨기고 항상 멀티플 모드로 동작 */
+.variations_form .wc-variation-mode-selector {
+    display: none !important;
+}
+
+/* 싱글 장바구니 버튼 숨김 (멀티플 모드에서는 불필요) */
+.variations_form .single_add_to_cart_button {
+    display: none !important;
+}
+
+/* 멀티플 버튼 스타일링 */
+.variations_form .wc-lock-variation-btn,
+.variations_form .wc-add-locked-to-cart {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--feedus-border-radius, 25px);
+    cursor: pointer;
+    transition: all var(--feedus-duration-default, 0.2s) ease;
+}
+
+/* "Add to List" 버튼 */
+.variations_form .wc-lock-variation-btn {
+    background-color: var(--feedus-gray-light, #f2f2f2);
+    color: var(--feedus-black, #1a1a1a);
+    border: 1px solid var(--bricks-border-color, #dddedf);
+}
+
+.variations_form .wc-lock-variation-btn:hover {
+    background-color: var(--bricks-border-color, #dddedf);
+}
+
+/* "Add All to Cart" 버튼 */
+.variations_form .wc-add-locked-to-cart {
+    background-color: var(--feedus-primary, #007D51);
+    color: var(--feedus-white, #ffffff);
+    border: none;
+}
+
+.variations_form .wc-add-locked-to-cart:hover {
+    background-color: var(--feedus-primary-hover, rgba(0, 125, 81, 0.8));
+}
