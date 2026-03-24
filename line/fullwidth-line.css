@@ -1,0 +1,33 @@
+/* --- 라인 변형: 풀폭 (패딩 무시, 엣지 투 엣지) --- */
+
+/* 하단 라인 (::after) */
+.feedus-line-full {
+  position: relative;
+}
+.feedus-line-full::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--feedus-primary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 상단 라인 (::before) */
+.feedus-line-full-top {
+  position: relative;
+}
+.feedus-line-full-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--feedus-primary);
+  pointer-events: none;
+  z-index: 1;
+}
