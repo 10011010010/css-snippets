@@ -34,6 +34,7 @@
   border-radius: 0;
   color: #007D51 !important;
   font-weight: 500 !important;
+  padding: 0 !important;
 }
 
 /* 3) +/- buttons: margin reset, border primary, circle shape */
