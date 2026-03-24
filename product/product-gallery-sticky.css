@@ -24,6 +24,8 @@
   width: 60px;
   height: 60px;
   flex-shrink: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* 썸네일 이미지: 원형 + primary color 테두리 */
