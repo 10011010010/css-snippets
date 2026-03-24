@@ -16,6 +16,8 @@
 /* Size label font-weight */
 .variations_form table.variations th.label label {
   font-weight: 500 !important;
+  margin-bottom: 6px !important;
+  display: block;
 }
 
 /* Size select + options font color */
@@ -63,7 +65,7 @@
 /* 5) "Add All to Cart" button styling */
 .variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart {
   color: #007D51;
-  background-color: #EBFE56;
+  background-color: #ffffff;
   border-color: #EBFE56;
 }
 
@@ -82,7 +84,7 @@
 
 .variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn:hover {
   color: #007D51;
-  background-color: #EBFE56;
+  background-color: #ffffff;
   border-color: #EBFE56;
 }
 
