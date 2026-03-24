@@ -51,6 +51,32 @@
   margin-bottom: 14px;
 }
 
+/* Reorder: quantity above locked-variations-container */
+.variations_form .woocommerce-variation-add-to-cart {
+  display: flex;
+  flex-direction: column;
+}
+
+.variations_form .wc-variation-mode-selector {
+  order: 1;
+}
+
+.variations_form .woocommerce-variation-add-to-cart > .quantity {
+  order: 2;
+}
+
+.variations_form .wc-locked-variations-container {
+  order: 3;
+}
+
+.variations_form .single_add_to_cart_button {
+  order: 4;
+}
+
+.variations_form .wc-multiple-variation-buttons {
+  order: 5;
+}
+
 /* 4) Button order: "Add to List" on top, "Add All to Cart" on bottom */
 .variations_form .wc-multiple-variation-buttons {
   display: flex;
