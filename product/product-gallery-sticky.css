@@ -1,0 +1,21 @@
+/* Fix: Product page 2-column layout - force 1:1 equal width */
+
+/* Grid 방식일 때 */
+#brxe-uiuyag.brx-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Flex 방식일 때 */
+#brxe-uiuyag > .product-image-sticky,
+#brxe-uiuyag > .product-info-col {
+  flex: 1 1 50%;
+  max-width: 50%;
+  min-width: 0; /* flex item 내부 콘텐츠가 넘치지 않도록 */
+}
+
+/* 이미지가 컨테이너를 넘지 않도록 */
+.product-image-sticky .woocommerce-product-gallery,
+.product-image-sticky .woocommerce-product-gallery img {
+  max-width: 100%;
+  height: auto;
+}
