@@ -1,0 +1,89 @@
+/*
+ * Fix: "Add Multiple Variations to Cart" 플러그인 버튼 표시 문제
+ *
+ * 문제: 모바일에서 싱글 버튼은 CSS로 숨기고, 멀티플 버튼은
+ *       플러그인 JS가 렌더링하지 못해 버튼이 아예 안 보임.
+ *
+ * 해결: 싱글 버튼을 무조건 숨기지 않고, 멀티플 버튼이 실제로
+ *       존재할 때만 JS로 숨김 처리. CSS는 멀티플 버튼 스타일만 담당.
+ *
+ * 적용 위치: Bricks Builder > 커스텀 CSS 또는 워드프레스 추가 CSS
+ */
+
+/* ── 모드 셀렉터 숨김 (항상 멀티플 모드) ── */
+.variations_form .wc-variation-mode-selector {
+    display: none !important;
+}
+
+/* ── 멀티플 버튼 강제 표시 ── */
+.variations_form .wc-multiple-variation-buttons {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 선택된 변형 목록 영역 표시 */
+.variations_form .wc-locked-variations-container {
+    display: block !important;
+    margin-bottom: 15px;
+}
+
+/*
+ * 싱글 버튼 숨김: JS가 멀티플 버튼 존재를 확인한 후
+ * body에 .has-multi-variation-btns 클래스를 추가할 때만 숨김
+ */
+body.has-multi-variation-btns .variations_form .single_add_to_cart_button {
+    display: none !important;
+}
+
+/* ── 멀티플 버튼 스타일링 ── */
+.variations_form .wc-lock-variation-btn,
+.variations_form .wc-add-locked-to-cart {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--feedus-border-radius, 25px);
+    cursor: pointer;
+    transition: all var(--feedus-duration-default, 0.2s) ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* "Add to List" 버튼 */
+.variations_form .wc-lock-variation-btn {
+    background-color: var(--feedus-gray-light, #f2f2f2);
+    color: var(--feedus-black, #1a1a1a);
+    border: 1px solid var(--bricks-border-color, #dddedf);
+}
+
+.variations_form .wc-lock-variation-btn:hover {
+    background-color: var(--bricks-border-color, #dddedf);
+}
+
+/* "Add All to Cart" 버튼 */
+.variations_form .wc-add-locked-to-cart {
+    background-color: var(--feedus-primary, #007D51);
+    color: var(--feedus-white, #ffffff);
+    border: none;
+}
+
+.variations_form .wc-add-locked-to-cart:hover {
+    background-color: var(--feedus-primary-hover, rgba(0, 125, 81, 0.8));
+}
+
+/* ── 모바일 대응 ── */
+@media (max-width: 768px) {
+    .variations_form .wc-multiple-variation-buttons {
+        flex-direction: column;
+    }
+
+    .variations_form .wc-lock-variation-btn,
+    .variations_form .wc-add-locked-to-cart {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
