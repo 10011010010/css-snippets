@@ -1,0 +1,48 @@
+/* WooCommerce Variations Form - Product Page Layout Fix */
+
+/* 1) Size label + dropdown: 2-column table → 1-column vertical stack */
+.variations_form table.variations tr {
+  display: flex;
+  flex-direction: column;
+}
+
+.variations_form table.variations th.label,
+.variations_form table.variations td.value {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+/* 2) Remove round border around quantity number input */
+.variations_form .quantity input.qty {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* 3) Remove bottom margin from minus button, add 14px margin-bottom to .quantity */
+.variations_form .quantity .action.minus {
+  margin-bottom: 0;
+}
+
+.variations_form .quantity {
+  margin-bottom: 14px;
+}
+
+/* 4) "Add All to Cart" button: text #007D51, bg #EBFE56, hover border #EBFE56 */
+.variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart {
+  color: #007D51;
+  background-color: #EBFE56;
+  border-color: #EBFE56;
+}
+
+.variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart:hover {
+  border-color: #EBFE56;
+}
+
+/* 5) Button padding: 10px 30px → 14px 40px */
+.variations_form .wc-multiple-variation-buttons .wc-add-locked-to-cart,
+.variations_form .wc-multiple-variation-buttons .wc-lock-variation-btn {
+  padding: 14px 40px;
+}
