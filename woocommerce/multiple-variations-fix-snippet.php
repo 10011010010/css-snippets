@@ -1,12 +1,16 @@
-<?php
 /**
  * Fix: "Add Multiple Variations to Cart" 플러그인 버튼 표시
- * 적용: Code Snippets 플러그인에 붙여넣기 (프론트엔드에서만 실행)
+ *
+ * Code Snippets 플러그인에 붙여넣기
+ * 실행 위치: "Only run on the front-end" 선택
+ *
+ * 주의: <?php 태그 없이 이 내용만 붙여넣으세요
  */
+
 add_action('wp_footer', function () {
     if (!is_product()) return;
     ?>
-    <style>
+    <style id="feedus-multi-variation-fix">
     /* 멀티플 버튼 강제 표시 */
     .variations_form .wc-multiple-variation-buttons {
         display: flex !important;
@@ -25,8 +29,9 @@ add_action('wp_footer', function () {
         display: none !important;
     }
 
-    /* 싱글 장바구니 버튼 숨김 */
-    .variations_form .single_add_to_cart_button {
+    /* 싱글 장바구니 버튼 + 수량 숨김 */
+    .variations_form .single_add_to_cart_button,
+    .variations_form .woocommerce-variation-add-to-cart > .quantity {
         display: none !important;
     }
 
@@ -63,16 +68,45 @@ add_action('wp_footer', function () {
     }
     </style>
 
-    <script>
-    jQuery(function ($) {
-        var $form = $('form.variations_form');
-        if (!$form.length) return;
+    <script id="feedus-multi-variation-fix-js">
+    (function() {
+        function forceMultipleMode() {
+            var modeSelect = document.getElementById('wc_variation_mode');
+            if (!modeSelect) return;
 
-        var $modeSelect = $form.find('#wc_variation_mode');
-        if (!$modeSelect.length) return;
+            // 모드를 multiple로 강제 변경
+            modeSelect.value = 'multiple';
 
-        $modeSelect.val('multiple').trigger('change');
-    });
+            // change 이벤트 발생 (플러그인 JS가 감지하도록)
+            modeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+            // 플러그인 JS가 이벤트를 무시할 경우 직접 DOM 조작
+            var btns = document.querySelector('.wc-multiple-variation-buttons');
+            if (btns) btns.style.display = 'flex';
+
+            var container = document.querySelector('.wc-locked-variations-container');
+            if (container) container.style.display = 'block';
+        }
+
+        // 즉시 실행
+        forceMultipleMode();
+
+        // DOM 로드 후 실행
+        document.addEventListener('DOMContentLoaded', forceMultipleMode);
+
+        // jQuery ready 후 실행 (플러그인 JS보다 늦게)
+        if (typeof jQuery !== 'undefined') {
+            jQuery(function($) {
+                setTimeout(forceMultipleMode, 100);
+                setTimeout(forceMultipleMode, 500);
+                setTimeout(forceMultipleMode, 1000);
+
+                // WooCommerce variations loaded 이벤트 감지
+                $('form.variations_form').on('wc_variation_form', forceMultipleMode);
+                $('form.variations_form').on('show_variation', forceMultipleMode);
+            });
+        }
+    })();
     </script>
     <?php
-});
+}, 999);
